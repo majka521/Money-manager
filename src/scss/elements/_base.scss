@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $font-lato;
+  color: $color-white;
+  font-size: 1.6rem;
+  background-color: $color-primary;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: $color-white;
+}
+
+// .container {
+// }

@@ -13,3 +13,4 @@ Użytkownik wprowadzając ręcznie kwoty każdego wydatku, bądź dochodu może 
 
 - React.js with Hooks
 - SASS
+- Fontawesome

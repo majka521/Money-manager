@@ -1,0 +1,17 @@
+.btn-login {
+  padding: 1rem 2rem;
+  border: none;
+  font-family: $font-lato;
+  font-weight: 700;
+  color: $color-white;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  letter-spacing: 0.2rem;
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: 10em;
+  transition: all 0.5s ease;
+
+  &:hover {
+    box-shadow: 0px 0px 20px 5px $color-optional;
+  }
+}
