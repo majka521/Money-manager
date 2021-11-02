@@ -7,7 +7,7 @@ export const Header = () => {
             Money Manager
           </a>
           <nav>
-            <button className="btn-login">Zaloguj</button>
+            <button className="btn btn-login">Zaloguj</button>
           </nav>
         </div>
       </div>
