@@ -17,6 +17,15 @@
     text-align: center;
   }
 
+  &__categoryList {
+    li {
+      padding: 5px 0;
+    }
+    a:hover {
+      color: $color-pink-strong;
+    }
+  }
+
   &__label {
     display: flex;
     text-align: center;

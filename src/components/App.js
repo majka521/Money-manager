@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { Header } from "./Header";
-import { AddTransaction } from "./AddTransaction";
+import { NewTransaction } from "./NewTransaction";
 
 export const App = () => {
   const [transaction, setTransaction] = useState([]);
@@ -26,7 +26,7 @@ export const App = () => {
   return (
     <>
       <Header>{console.log(transaction)}</Header>
-      <AddTransaction></AddTransaction>
+      <NewTransaction></NewTransaction>
     </>
   );
 };
