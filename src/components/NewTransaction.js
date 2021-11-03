@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Transaction } from "./Transactions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faDollarSign, faCalendarAlt, faPen, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import categories from "./categories";
 import Calendar from "react-calendar";
+import { db } from "../firebase";
 
 export const NewTransaction = () => {
   const [showNewTransactionForm, setShowNewTransactionForm] = useState(false);
@@ -14,6 +16,25 @@ export const NewTransaction = () => {
   const [cost, setCost] = useState(0);
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
+
+  const [database, setDatabase] = useState([]);
+
+  //firebase - pobranie istniejących danych
+  useEffect(() => {
+    db.collection("transaction")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setDatabase((state) => [
+            ...state,
+            {
+              ...doc.data(),
+              id: doc.id,
+            },
+          ]);
+        });
+      });
+  }, []);
 
   const handleNewTransaction = () => {
     setShowNewTransactionForm((state) => !state);
@@ -33,7 +54,31 @@ export const NewTransaction = () => {
     setShowCategoryList((state) => !state);
   };
   const handleChooseDate = () => {
+    setDate(date);
     setShowCalendar((state) => !state);
+  };
+  const handleAddTransaction = (e) => {
+    e.preventDefault();
+    setShowNewTransactionForm((state) => !state);
+
+    setCategory("");
+    setCategoryTitle("wybierz kategorię");
+    setCost(0);
+    setDate(new Date());
+    setDescription("");
+
+    //firebase - dodanie danych
+    db.collection("transaction")
+      .doc()
+      .set({
+        category: category,
+        cost: cost,
+        date: date,
+        description: description,
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
   };
 
   return (
@@ -77,7 +122,7 @@ export const NewTransaction = () => {
                   <button onClick={handleShowCalendar} className="btn btn-category">
                     Zmień datę <FontAwesomeIcon icon={faChevronDown} />
                   </button>
-                  {showCalendar === true && <Calendar value={date} onChange={setDate} />}
+                  {showCalendar === true && <Calendar value={date} onChange={handleChooseDate} />}
                 </div>
                 <div className="newTransaction__label">
                   <p>
@@ -85,12 +130,15 @@ export const NewTransaction = () => {
                   </p>
                   <textarea rows="1" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
-                <button className="btn btn-addTransaction">dodaj</button>
+                <button onClick={handleAddTransaction} className="btn btn-addTransaction">
+                  dodaj
+                </button>
               </form>
             </div>
           </div>
         </section>
       )}
+      <Transaction database={database}></Transaction>
     </>
   );
 };

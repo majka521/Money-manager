@@ -13,5 +13,6 @@ Użytkownik wprowadzając ręcznie kwoty każdego wydatku, bądź dochodu może 
 
 - React.js with Hooks
 - React calendar
+- Firebase
 - SASS
 - Fontawesome
