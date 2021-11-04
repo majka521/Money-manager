@@ -1,7 +1,7 @@
 .header {
   padding: 15px 15px;
-  box-shadow: 0px 13px 23px -8px rgba($color-pink-pastel, 0.61);
-  border-bottom: 1px solid $color-pink-pastel;
+  background-color: $color-light;
+  border-bottom: 1px solid $color-gray-light;
 
   &__wrapper {
     display: flex;

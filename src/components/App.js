@@ -1,14 +1,16 @@
 import React from "react";
-// import { useState, useEffect } from "react";
-// import { db } from "../firebase";
 import { Header } from "./Header";
-import { NewTransaction } from "./NewTransaction";
+import { Transaction } from "./Transactions";
+import { Statistics } from "./Statistics";
 
 export const App = () => {
   return (
     <>
       <Header />
-      <NewTransaction></NewTransaction>
+      <main className="mainSection container">
+        <Transaction />
+        <Statistics />
+      </main>
     </>
   );
 };

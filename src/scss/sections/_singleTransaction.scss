@@ -1,0 +1,36 @@
+.history {
+  margin: 5% 2% 5% 0;
+
+  &__header {
+    position: relative;
+  }
+
+  &__allList {
+  }
+  &__singleTransaction {
+    padding: 15px 0;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__group {
+      display: flex;
+    }
+
+    &__icon {
+      font-size: 2em;
+      margin-right: 20px;
+    }
+    &__categoryTitle {
+    }
+    &__description {
+      font-size: 1.6rem;
+      color: $color-gray-strong;
+    }
+    &__cost {
+      color: $color-red-strong;
+      font-weight: 700;
+    }
+  }
+}

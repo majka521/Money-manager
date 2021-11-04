@@ -1,7 +1,8 @@
 .newTransaction {
   font-size: 1.9rem;
-  border: 2px solid white;
-  box-shadow: 0px 0px 0px 0px black;
+  border: 2px solid $color-text;
+  box-shadow: 0px 0px 0px 0px $color-light;
+  position: relative;
 
   &__form {
     padding: 30px 20px;
@@ -40,10 +41,10 @@
   }
 
   input {
-    color: white;
+    color: $color-text;
     background: none;
     border: none;
-    border-bottom: 1px solid $color-white;
+    border-bottom: 1px solid $color-text;
     margin-bottom: 20px;
     width: 100px;
   }
@@ -51,10 +52,10 @@
   textarea {
     font-family: $font-lato;
     resize: none;
-    color: white;
+    color: $color-text;
     background: none;
     border: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid $color-text;
     margin: 0 0 20px;
   }
 }

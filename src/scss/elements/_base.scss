@@ -10,7 +10,7 @@ html {
 
 body {
   font-family: $font-lato;
-  color: $color-white;
+  color: $color-text;
   font-size: 1.6rem;
   background-color: $color-primary;
 }
@@ -18,8 +18,10 @@ body {
 a {
   text-decoration: none;
   cursor: pointer;
-  color: $color-white;
+  color: $color-text;
 }
 
-// .container {
-// }
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
