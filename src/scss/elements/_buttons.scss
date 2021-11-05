@@ -7,15 +7,14 @@
   border-radius: 10rem;
   background: none;
   transition: all 0.5s ease;
+  font-family: $font-lato;
   &-login {
     padding: 1rem 2rem;
-    border: none;
-    font-family: $font-lato;
     font-weight: 700;
-    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    // background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
     border: 1px solid $color-optional;
     &:hover {
-      box-shadow: 0px 0px 20px 0px $color-pink-strong;
+      box-shadow: 0px 0px 20px 0px $color-pink-pastel;
       border: 1px solid $color-text;
     }
   }
@@ -34,8 +33,7 @@
   &-addTransaction {
     color: $color-pink-strong;
     font-weight: 700;
-    padding: 1rem 2rem;
-    background-color: $color-primary;
+    padding: 0 1.5rem;
     border: 1px solid $color-pink-strong;
     &:hover {
       color: $color-primary;
@@ -44,10 +42,15 @@
     }
   }
   &-category {
+    position: relative;
+    text-transform: inherit;
+    letter-spacing: 0;
     padding: 1rem;
     border: 1px solid $color-text;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
+    min-width: 220px;
+    border-radius: 10px;
+    margin-bottom: 5px;
     &:hover {
       color: $color-pink-strong;
       border-color: $color-pink-strong;
@@ -58,7 +61,7 @@
     position: absolute;
     top: 0;
     right: 4px;
-    font-size: 3rem;
+    font-size: 2rem;
     &:hover {
       color: $color-pink-strong;
     }

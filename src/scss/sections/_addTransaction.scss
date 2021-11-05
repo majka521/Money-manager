@@ -1,61 +1,106 @@
+@use "sass:list";
+@use "sass:map";
+
+$iconColors: (
+  key-1: #e8baba,
+  key-2: #e4bdaf,
+  key-3: #e3cdab,
+  key-4: #e2dea7,
+  key-5: #c9e2a7,
+  key-6: #a3e0a7,
+  key-7: #a3e0c7,
+  key-8: #9fdddf,
+  key-9: #9fccdf,
+  key-10: #a3c0e0,
+  key-11: #9faddf,
+  key-12: #a99fdf,
+  key-13: #c09fdf,
+  key-14: #cfa3e0,
+  key-15: #daa3e0,
+  key-16: #e4afda,
+);
+
 .newTransaction {
-  font-size: 1.9rem;
-  border: 2px solid $color-text;
-  box-shadow: 0px 0px 0px 0px $color-light;
   position: relative;
+  width: 100%;
+  margin-top: 3%;
 
   &__form {
-    padding: 30px 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
   }
+  &__description {
+    font-size: 1.4rem;
+    padding-bottom: 8px;
+  }
+  &__icon {
+    margin-right: 5px;
 
-  &__title {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding-bottom: 20px;
-    text-align: center;
+    &__btn {
+      position: absolute;
+      right: 15px;
+      top: 12px;
+    }
   }
 
   &__categoryList {
+    position: absolute;
+    background-color: $color-light;
+    z-index: 1;
+    border: 1px solid $color-text;
+    width: 220px;
+    border-radius: 10px;
+    padding: 10px;
+
     li {
-      padding: 5px 0;
+      padding: 5px;
+
+      @for $i from 1 through 16 {
+        &:nth-child(#{$i}) {
+          a:hover {
+            color: map.get($iconColors, key-#{$i});
+            border-bottom: 1px solid map.get($iconColors, key-#{$i});
+          }
+        }
+      }
+
+      a {
+        line-height: 20px;
+      }
     }
-    a:hover {
-      color: $color-pink-strong;
+
+    &__icon {
+      margin-right: 15px;
     }
   }
 
   &__label {
+    border: 1px solid $color-text;
+    width: 220px;
+    height: 41px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    line-height: 1.6rem;
     display: flex;
-    text-align: center;
-  }
-
-  &__icon {
-    margin-right: 12px;
-  }
-
-  &__currency {
-    margin-left: 12px;
   }
 
   input {
-    color: $color-text;
-    background: none;
     border: none;
-    border-bottom: 1px solid $color-text;
-    margin-bottom: 20px;
-    width: 100px;
+    width: 100%;
   }
 
   textarea {
+    line-height: 2.3rem;
     font-family: $font-lato;
+    width: 100%;
     resize: none;
-    color: $color-text;
-    background: none;
     border: none;
-    border-bottom: 1px solid $color-text;
-    margin: 0 0 20px;
+  }
+}
+.selectedHover {
+  &Category,
+  &Date {
+    color: $color-pink-strong;
+    border-color: $color-pink-strong;
   }
 }

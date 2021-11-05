@@ -1,5 +1,5 @@
 .history {
-  margin: 5% 2% 5% 0;
+  margin: 3% 2% 5% 0;
 
   &__header {
     position: relative;
@@ -7,6 +7,9 @@
 
   &__allList {
   }
+  &__li {
+  }
+
   &__singleTransaction {
     padding: 15px 0;
     font-size: 1.8rem;

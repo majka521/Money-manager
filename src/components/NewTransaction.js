@@ -1,51 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes, faThumbtack } from "@fortawesome/free-solid-svg-icons";
 import categories from "./categories";
 import Calendar from "react-calendar";
 import { db } from "../firebase";
 
-export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNewTransactionForm, handleNewTransaction }) => {
+export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNewTransactionForm }) => {
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [chevronFirst, setChevronFirst] = useState(faChevronDown);
+  const [chevronSecond, setChevronSecond] = useState(faChevronDown);
 
-  const [category, setCategory] = useState("");
-  const [categoryTitle, setCategoryTitle] = useState("wybierz kategorię");
-  const [cost, setCost] = useState(0);
+  const [classDivCategory, setClassDivCategory] = useState(false);
+  const [selectedHoverCategory, setSelectedHoverCategory] = useState("");
+  const [classDivDate, setClassDivDate] = useState(false);
+  const [selectedHoverDate, setSelectedHoverDate] = useState("");
+
+  const [category, setCategory] = useState("groceries");
+  const [categoryTitle, setCategoryTitle] = useState("Zakupy spożywcze");
+  const [cost, setCost] = useState("");
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
-  const [icon, setIcon] = useState("");
+
+  useEffect(() => {
+    if (classDivCategory === true) {
+      setSelectedHoverCategory("selectedHoverCategory");
+    } else {
+      setSelectedHoverCategory("");
+    }
+  }, [classDivCategory]);
+  useEffect(() => {
+    if (classDivDate === true) {
+      setSelectedHoverDate("selectedHoverDate");
+    } else {
+      setSelectedHoverDate("");
+    }
+  }, [classDivDate]);
 
   const handleShowCategoryList = (e) => {
     e.preventDefault();
     setShowCategoryList((state) => !state);
+    setClassDivCategory((state) => !state);
+
+    if (chevronFirst === faChevronDown) {
+      setChevronFirst(faChevronUp);
+    } else {
+      setChevronFirst(faChevronDown);
+    }
   };
   const handleShowCalendar = (e) => {
     e.preventDefault();
     setShowCalendar((state) => !state);
+    setClassDivDate((state) => !state);
+
+    if (chevronSecond === faChevronDown) {
+      setChevronSecond(faChevronUp);
+    } else {
+      setChevronSecond(faChevronDown);
+    }
   };
-  const handleChooseCategory = (e, selectedCategory, selectedTitle, selectedIcon) => {
+  const handleChooseCategory = (e, selectedCategory, selectedTitle) => {
     e.preventDefault();
     setCategory(selectedCategory);
     setCategoryTitle(selectedTitle);
-    setIcon(selectedIcon);
     setShowCategoryList((state) => !state);
+    setChevronFirst(faChevronDown);
+    setClassDivCategory((state) => !state);
   };
   const handleChooseDate = (date) => {
     setDate(date);
     setShowCalendar(false);
+    setChevronSecond(faChevronDown);
+    setClassDivDate((state) => !state);
+  };
+  const handleNewTransaction = () => {
+    setShowNewTransactionForm((state) => !state);
   };
   const handleAddTransaction = (e) => {
     e.preventDefault();
     setShowNewTransactionForm((state) => !state);
 
-    setCategory("");
-    setCategoryTitle("wybierz kategorię");
-    setCategory("");
+    setCategory("groceries");
+    setCategoryTitle("Zakupy spożywcze");
     setCost(0);
     setDate(new Date());
     setDescription("");
-    setIcon("");
 
     //firebase - dodanie danych
     db.collection("transaction")
@@ -57,7 +96,11 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
         description: description,
       })
       .then((doc) => {
-        setDatabase((state) => [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: date, description: description, id: doc.id }]);
+        setDatabase((state) =>
+          [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }].sort((a, b) => {
+            return b.date.seconds - a.date.seconds;
+          })
+        );
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -67,43 +110,49 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
   return (
     <>
       {showNewTransactionForm === true && (
-        <section className="newTransaction">
+        <section className="newTransaction section container">
           <button className="btn btn-exit" onClick={handleNewTransaction}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <form className="newTransaction__form">
-            <h2 className="newTransaction__title">nowa transakcja</h2>
-            <button className="btn btn-category" onClick={handleShowCategoryList}>
-              {/* <FontAwesomeIcon icon={icon.iconName} /> */}
-              {/* {console.log(<FontAwesomeIcon icon={icon.iconName} />)} */}
-              {categoryTitle} <FontAwesomeIcon icon={faChevronDown} />
-            </button>
-            {showCategoryList === true && (
-              <ul className="newTransaction__categoryList">
-                {categories.map((cat) => {
-                  return (
-                    <li key={cat.category}>
-                      <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title, cat.icon)}>
-                        <FontAwesomeIcon icon={cat.icon} /> {cat.title}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-            <div className="newTransaction__label">
-              <p>
-                <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" />
+            <div>
+              <p className="newTransaction__description">
+                <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> Wybierz kategorię:
               </p>
-              <input type="number" placeholder={"0"} name="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
-              <p className="newTransaction__currency">zł</p>
+              {/* "btn btn-category", */}
+              <button className={`${selectedHoverCategory} btn btn-category`} onClick={handleShowCategoryList}>
+                {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
+              </button>
+
+              {showCategoryList === true && (
+                <ul className="newTransaction__categoryList">
+                  {categories.map((cat) => {
+                    return (
+                      <li key={cat.category}>
+                        <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title)}>
+                          <FontAwesomeIcon icon={cat.icon} className="newTransaction__categoryList__icon" style={{ color: cat.color }} />
+                          {cat.title}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
-            <div className="newTransaction__label">
-              <p>
-                <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> {date.toLocaleDateString()}
+            <div>
+              <p className="newTransaction__description">
+                <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> Wpisz kwotę:
               </p>
-              <button onClick={handleShowCalendar} className="btn btn-category">
-                Zmień datę <FontAwesomeIcon icon={faChevronDown} />
+              <div className="newTransaction__label">
+                <input type="number" placeholder={"0 zł"} name="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
+              </div>
+            </div>
+            <div>
+              <p className="newTransaction__description">
+                <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> Wybierz datę:
+              </p>
+              <button onClick={handleShowCalendar} className={`${selectedHoverDate} btn btn-category`}>
+                {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
               </button>
               {showCalendar === true && (
                 <div className="calendar">
@@ -111,11 +160,14 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
                 </div>
               )}
             </div>
-            <div className="newTransaction__label">
-              <p>
-                <FontAwesomeIcon icon={faPen} className="newTransaction__icon" />
+
+            <div>
+              <p className="newTransaction__description">
+                <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> Notatka:
               </p>
-              <textarea rows="1" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+              <div className="newTransaction__label">
+                <textarea maxLength="24" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+              </div>
             </div>
             <button onClick={handleAddTransaction} className="btn btn-addTransaction">
               dodaj
