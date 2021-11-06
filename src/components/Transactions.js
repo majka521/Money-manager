@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
-import { getIcon } from "./categories";
+import { getColor, getIcon } from "./data/categories";
 
 export const Transaction = ({ database, setDatabase, setShowNewTransactionForm }) => {
   // firebase - pobranie istniejących danych
@@ -45,7 +45,7 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm }
               <li key={data.id} className="history__li">
                 <a href="/" className="history__singleTransaction">
                   <div className="history__singleTransaction__group">
-                    <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" />
+                    <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
                     <div>
                       <p>{new Date(data.date.seconds * 1000).toLocaleDateString()}</p>
                       <h3 className="history__singleTransaction__categoryTitle">{data.categoryTitle}</h3>

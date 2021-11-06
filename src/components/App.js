@@ -11,21 +11,9 @@ export const App = () => {
   return (
     <>
       <Header />
-      <section>
-        <NewTransaction
-          showNewTransactionForm={showNewTransactionForm}
-          setDatabase={setDatabase}
-          setShowNewTransactionForm={setShowNewTransactionForm}
-          // handleNewTransaction={handleNewTransaction}
-        ></NewTransaction>
-      </section>
+      <NewTransaction showNewTransactionForm={showNewTransactionForm} setDatabase={setDatabase} setShowNewTransactionForm={setShowNewTransactionForm}></NewTransaction>
       <main className="mainSection container">
-        <Transaction
-          database={database}
-          setDatabase={setDatabase}
-          setShowNewTransactionForm={setShowNewTransactionForm}
-          // handleNewTransaction={handleNewTransaction}
-        />
+        <Transaction database={database} setDatabase={setDatabase} setShowNewTransactionForm={setShowNewTransactionForm} />
         <Statistics />
       </main>
     </>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes, faThumbtack } from "@fortawesome/free-solid-svg-icons";
-import categories from "./categories";
+import categories from "./data/categories";
 import Calendar from "react-calendar";
 import { db } from "../firebase";
+import { getIcon } from "./data/categories";
 
 export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNewTransactionForm }) => {
   const [showCategoryList, setShowCategoryList] = useState(false);
@@ -11,36 +12,36 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
   const [chevronFirst, setChevronFirst] = useState(faChevronDown);
   const [chevronSecond, setChevronSecond] = useState(faChevronDown);
 
-  const [classDivCategory, setClassDivCategory] = useState(false);
-  const [selectedHoverCategory, setSelectedHoverCategory] = useState("");
-  const [classDivDate, setClassDivDate] = useState(false);
-  const [selectedHoverDate, setSelectedHoverDate] = useState("");
-
   const [category, setCategory] = useState("groceries");
   const [categoryTitle, setCategoryTitle] = useState("Zakupy spożywcze");
   const [cost, setCost] = useState("");
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
 
+  //Changes className of buttons like :focus
+  const [addClassOnClickCategory, setAddClassOnClickCategory] = useState(false);
+  const [nameOfClassOnClickCategory, setNameOfClassOnClickCategory] = useState("");
+  const [addClassOnClickDate, setAddClassOnClickDate] = useState(false);
+  const [nameOfClassOnClickDate, setNameOfClassOnClickDate] = useState("");
   useEffect(() => {
-    if (classDivCategory === true) {
-      setSelectedHoverCategory("selectedHoverCategory");
+    if (addClassOnClickCategory === true) {
+      setNameOfClassOnClickCategory("selectedCategory");
     } else {
-      setSelectedHoverCategory("");
+      setNameOfClassOnClickCategory("");
     }
-  }, [classDivCategory]);
+  }, [addClassOnClickCategory]);
   useEffect(() => {
-    if (classDivDate === true) {
-      setSelectedHoverDate("selectedHoverDate");
+    if (addClassOnClickDate === true) {
+      setNameOfClassOnClickDate("selectedDate");
     } else {
-      setSelectedHoverDate("");
+      setNameOfClassOnClickDate("");
     }
-  }, [classDivDate]);
+  }, [addClassOnClickDate]);
 
   const handleShowCategoryList = (e) => {
     e.preventDefault();
     setShowCategoryList((state) => !state);
-    setClassDivCategory((state) => !state);
+    setAddClassOnClickCategory((state) => !state);
 
     if (chevronFirst === faChevronDown) {
       setChevronFirst(faChevronUp);
@@ -51,7 +52,7 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
   const handleShowCalendar = (e) => {
     e.preventDefault();
     setShowCalendar((state) => !state);
-    setClassDivDate((state) => !state);
+    setAddClassOnClickDate((state) => !state);
 
     if (chevronSecond === faChevronDown) {
       setChevronSecond(faChevronUp);
@@ -65,13 +66,13 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
     setCategoryTitle(selectedTitle);
     setShowCategoryList((state) => !state);
     setChevronFirst(faChevronDown);
-    setClassDivCategory((state) => !state);
+    setAddClassOnClickCategory((state) => !state);
   };
   const handleChooseDate = (date) => {
     setDate(date);
     setShowCalendar(false);
     setChevronSecond(faChevronDown);
-    setClassDivDate((state) => !state);
+    setAddClassOnClickDate((state) => !state);
   };
   const handleNewTransaction = () => {
     setShowNewTransactionForm((state) => !state);
@@ -119,9 +120,8 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
               <p className="newTransaction__description">
                 <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> Wybierz kategorię:
               </p>
-              {/* "btn btn-category", */}
-              <button className={`${selectedHoverCategory} btn btn-category`} onClick={handleShowCategoryList}>
-                {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
+              <button className={`${nameOfClassOnClickCategory} btn btn-category`} onClick={handleShowCategoryList}>
+                <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
               </button>
 
               {showCategoryList === true && (
@@ -143,7 +143,7 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
               <p className="newTransaction__description">
                 <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> Wpisz kwotę:
               </p>
-              <div className="newTransaction__label">
+              <div className="newTransaction__label newTransaction__label__input">
                 <input type="number" placeholder={"0 zł"} name="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
               </div>
             </div>
@@ -151,7 +151,7 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
               <p className="newTransaction__description">
                 <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> Wybierz datę:
               </p>
-              <button onClick={handleShowCalendar} className={`${selectedHoverDate} btn btn-category`}>
+              <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
                 {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
               </button>
               {showCalendar === true && (
@@ -165,7 +165,7 @@ export const NewTransaction = ({ showNewTransactionForm, setDatabase, setShowNew
               <p className="newTransaction__description">
                 <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> Notatka:
               </p>
-              <div className="newTransaction__label">
+              <div className="newTransaction__label newTransaction__label__input">
                 <textarea maxLength="24" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
               </div>
             </div>
