@@ -1,16 +1,44 @@
-export const Statistics = () => {
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import { getColor } from "./data/categories";
+
+export const Statistics = ({ database }) => {
+  //Total expenses
+  let sum = 0;
+  let allCosts = [];
+  let allCategoriesTitle = [];
+  let allColors = [];
+
+  database.map((el) => {
+    sum += +el.cost;
+    allCosts.push(el.cost);
+    allCategoriesTitle.push(el.categoryTitle);
+    allColors.push(getColor(el.category));
+  });
+
   return (
     <section className="statistics section">
       <div className="section__header">
         <h2 className="section__title">Statystyki</h2>
         <p className="section__timePeriod">tu będą daty z okresu czasu</p>
       </div>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-        of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was
-        popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
-        Lorem Ipsum.
-      </p>
+      <h2>
+        Łącznie kwota wydatków: <span className="statistics__sum">-{sum}</span>
+      </h2>
+      <Doughnut
+        data={{
+          labels: allCategoriesTitle,
+          datasets: [
+            {
+              label: "Expenses",
+              data: allCosts,
+              backgroundColor: allColors,
+              // borderColor: "black",
+              // borderWidth: 1,
+            },
+          ],
+        }}
+      />
     </section>
   );
 };

@@ -18,15 +18,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const categories = [
-  { category: "groceries", icon: faShoppingBasket, title: "Zakupy spożywcze", color: "#FF3200" },
-  { category: "alcohol", icon: faWineGlassAlt, title: "Alkohol", color: "#FF8C00" },
-  { category: "eatingOut", icon: faPizzaSlice, title: "Jedzenie na mieście", color: "#FFCF00" },
-  { category: "health", icon: faHeartbeat, title: "Zdrowie", color: "#e6df2a" },
+  { category: "groceries", icon: faShoppingBasket, title: "Zakupy spożywcze", color: "#FF4069" },
+  { category: "alcohol", icon: faWineGlassAlt, title: "Alkohol", color: "#FF9223" },
+  { category: "eatingOut", icon: faPizzaSlice, title: "Jedzenie na mieście", color: "#FFC234" },
+  { category: "health", icon: faHeartbeat, title: "Zdrowie", color: "#FFCF00" },
   { category: "bills", icon: faWallet, title: "Rachunki", color: "#a6ff00" },
   { category: "travel", icon: faPlaneDeparture, title: "Podróże", color: "rgb(81, 255, 0)" },
-  { category: "transport", icon: faBusAlt, title: "Transport", color: "#00EE93" },
+  { category: "transport", icon: faBusAlt, title: "Transport", color: "#4BC0C0" },
   { category: "car", icon: faCar, title: "Samochód", color: "#00d9ff" },
-  { category: "cosmetics", icon: faShower, title: "Kosmetyki", color: "rgb(10, 162, 233)" },
+  { category: "cosmetics", icon: faShower, title: "Kosmetyki", color: "#059BFF" },
   { category: "cloths", icon: faTshirt, title: "Ubrania", color: "#002fff" },
   { category: "home", icon: faHome, title: "Dom", color: "#ae67ff" },
   { category: "sport", icon: faVolleyballBall, title: "Sport", color: "#8C00FF" },

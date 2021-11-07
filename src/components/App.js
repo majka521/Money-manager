@@ -19,7 +19,7 @@ export const App = () => {
 
       <main className="mainSection container">
         <Transaction database={database} setDatabase={setDatabase} setShowNewTransactionForm={setShowNewTransactionForm} setShowEditTransactionForm={setShowEditTransactionForm} />
-        <Statistics />
+        <Statistics database={database} />
       </main>
     </>
   );

@@ -40,17 +40,16 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
 
   //AddTransaction button validation
   const [nameOfClassAddTransaction, setNameOfClassAddTransaction] = useState("btn-inActive");
-  const [disabledAddTransaction, setDisabledAddTransaction] = useState("true");
+  const [disabledAddTransaction, setDisabledAddTransaction] = useState(true);
   useEffect(() => {
     if (cost > 0 && cost !== "") {
       setNameOfClassAddTransaction("btn-addTransaction");
       setDisabledAddTransaction("");
     } else {
       setNameOfClassAddTransaction("btn-inActive");
-      setDisabledAddTransaction("true");
+      setDisabledAddTransaction(true);
     }
   }, [cost]);
-  console.log(cost);
 
   const handleShowCategoryList = (e) => {
     e.preventDefault();

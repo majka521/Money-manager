@@ -1,3 +1,8 @@
 .statistics {
   margin: 3% 0 5% 2%;
+
+  &__sum {
+    font-weight: 700;
+    color: $color-red-strong;
+  }
 }
