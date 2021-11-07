@@ -4,7 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
 import { getColor, getIcon } from "./data/categories";
 
-export const Transaction = ({ database, setDatabase, setShowNewTransactionForm }) => {
+export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm }) => {
   // firebase - pobranie istniejących danych
   useEffect(() => {
     db.collection("transaction")
@@ -26,6 +26,11 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm }
   const handleNewTransaction = () => {
     setShowNewTransactionForm((state) => !state);
   };
+  const handleEditTransaction = (e, data) => {
+    e.preventDefault();
+    setShowEditTransactionForm((state) => !state);
+    console.log(data);
+  };
 
   return (
     <>
@@ -43,7 +48,7 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm }
           {database.map((data) => {
             return (
               <li key={data.id} className="history__li">
-                <a href="/" className="history__singleTransaction">
+                <a href="/" className="history__singleTransaction" onClick={(e, data) => handleEditTransaction(e, data)}>
                   <div className="history__singleTransaction__group">
                     <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
                     <div>

@@ -29,12 +29,18 @@
     }
   }
 
+  &-inActive,
   &-addTransaction {
     margin: 13px 0;
-    color: $color-pink-strong;
+    color: $color-gray-strong;
     font-weight: 700;
     padding: 0 1.5rem;
-    border: 1px solid $color-pink-strong;
+    border: 1px solid $color-gray-strong;
+  }
+
+  &-addTransaction {
+    color: $color-pink-strong;
+    border-color: $color-pink-strong;
     &:hover {
       color: $color-primary;
       background-color: $color-pink-strong;
