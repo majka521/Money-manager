@@ -4,7 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
 import { getColor, getIcon } from "./data/categories";
 
-export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm }) => {
+export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, setEditMode, nameOfClassOfEditingTransaction, setNameOfClassOfEditingTransaction }) => {
   // firebase - pobranie istniejących danych
   useEffect(() => {
     db.collection("transaction")
@@ -25,11 +25,18 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, 
 
   const handleNewTransaction = () => {
     setShowNewTransactionForm((state) => !state);
+    setEditMode(false);
   };
-  const handleEditTransaction = (e, data) => {
+
+  let elementAIndex = 0;
+  const handleEditTransaction = (e, data, index) => {
+    elementAIndex = index;
     e.preventDefault();
     setShowEditTransactionForm((state) => !state);
-    console.log(data);
+    setEditMode(data);
+    setNameOfClassOfEditingTransaction("history__editing");
+    document.getElementsByClassName(`history__li`)[index].classList.add(nameOfClassOfEditingTransaction);
+    console.log(nameOfClassOfEditingTransaction);
   };
 
   return (
@@ -45,10 +52,10 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, 
           </button>
         </div>
         <ul className="history__allList">
-          {database.map((data) => {
+          {database.map((data, index) => {
             return (
-              <li key={data.id} className="history__li">
-                <a href="/" className="history__singleTransaction" onClick={(e, data) => handleEditTransaction(e, data)}>
+              <li key={data.id} className={`history__li`}>
+                <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data, index)}>
                   <div className="history__singleTransaction__group">
                     <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
                     <div>

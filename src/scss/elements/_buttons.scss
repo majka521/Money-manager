@@ -30,7 +30,8 @@
   }
 
   &-inActive,
-  &-addTransaction {
+  &-addTransaction,
+  &-delete {
     margin: 13px 0;
     color: $color-gray-strong;
     font-weight: 700;
@@ -38,7 +39,8 @@
     border: 1px solid $color-gray-strong;
   }
 
-  &-addTransaction {
+  &-addTransaction,
+  &-delete {
     color: $color-pink-strong;
     border-color: $color-pink-strong;
     &:hover {

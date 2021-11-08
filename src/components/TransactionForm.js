@@ -6,7 +6,7 @@ import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes
 import categories from "./data/categories";
 import { getIcon } from "./data/categories";
 
-export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransactionForm, setShowEditTransactionForm }) => {
+export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setNameOfClassOfEditingTransaction }) => {
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [chevronFirst, setChevronFirst] = useState(faChevronDown);
@@ -51,6 +51,35 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
     }
   }, [cost]);
 
+  //Edit mode
+  const [chooseOrEdit, setChooseOrEdit] = useState("Wybierz");
+  const [typeOrEdit, setTypeOrEdit] = useState("Wpisz");
+  const [typeOrEditNote, setTypeOrEditNote] = useState("Miejsce na notatkę");
+  const [addOrEditButton, setAddOrEditButton] = useState("Dodaj");
+  useEffect(() => {
+    if (editMode !== false) {
+      setChooseOrEdit("Edytuj");
+      setTypeOrEdit("Edytuj");
+      setTypeOrEditNote("Edytuj notatkę");
+      setAddOrEditButton("Edytuj");
+      setCategory(editMode.category);
+      setCategoryTitle(editMode.categoryTitle);
+      setCost(editMode.cost);
+      setDate(new Date(editMode.date.seconds * 1000));
+      setDescription(editMode.description);
+    } else {
+      setChooseOrEdit("Wybierz");
+      setTypeOrEdit("Wpisz");
+      setTypeOrEditNote("Miejsce na notatkę");
+      setAddOrEditButton("Dodaj");
+      setCategory("groceries");
+      setCategoryTitle("Zakupy spożywcze");
+      setCost("");
+      setDate(new Date());
+      setDescription("");
+    }
+  }, [editMode]);
+
   const handleShowCategoryList = (e) => {
     e.preventDefault();
     setShowCategoryList((state) => !state);
@@ -88,50 +117,101 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
     setAddClassOnClickDate((state) => !state);
   };
 
-  const handleNewTransaction = () => {
-    setShowNewTransactionForm((state) => !state);
+  const handleExitTransaction = () => {
+    if (editMode !== false) {
+      setShowEditTransactionForm((state) => !state);
+      setNameOfClassOfEditingTransaction("");
+    } else {
+      setShowNewTransactionForm((state) => !state);
+    }
   };
 
   const handleAddTransaction = (e) => {
     e.preventDefault();
-    setShowNewTransactionForm((state) => !state);
 
-    setCategory("groceries");
-    setCategoryTitle("Zakupy spożywcze");
-    setCost(0);
-    setDate(new Date());
-    setDescription("");
+    if (editMode !== false) {
+      setShowEditTransactionForm((state) => !state);
 
-    //firebase - add to database
+      //firebase - edit
+      // db.collection("transaction")
+      //   .add({
+      //     category: category,
+      //     categoryTitle: categoryTitle,
+      //     cost: cost,
+      //     date: date,
+      //     description: description,
+      //   })
+      //   .then((doc) => {
+      //     setDatabase((state) =>
+      //       [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }].sort((a, b) => {
+      //         return b.date.seconds - a.date.seconds;
+      //       })
+      //     );
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error writing document: ", error);
+      //   });
+    } else {
+      setShowNewTransactionForm((state) => !state);
+
+      setCategory("groceries");
+      setCategoryTitle("Zakupy spożywcze");
+      setCost(0);
+      setDate(new Date());
+      setDescription("");
+
+      //firebase - add to database
+      db.collection("transaction")
+        .add({
+          category: category,
+          categoryTitle: categoryTitle,
+          cost: cost,
+          date: date,
+          description: description,
+        })
+        .then((doc) => {
+          setDatabase((state) =>
+            [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }].sort((a, b) => {
+              return b.date.seconds - a.date.seconds;
+            })
+          );
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    }
+  };
+
+  const handleDeleteTransaction = (e) => {
+    e.preventDefault();
+    setShowEditTransactionForm(false);
+    // setNameOfClassOfEditingTransaction("");
+
+    // firebase - delete
     db.collection("transaction")
-      .add({
-        category: category,
-        categoryTitle: categoryTitle,
-        cost: cost,
-        date: date,
-        description: description,
-      })
-      .then((doc) => {
+      .doc(editMode.id)
+      .delete()
+      .then(() => {
         setDatabase((state) =>
-          [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }].sort((a, b) => {
-            return b.date.seconds - a.date.seconds;
+          state.filter((el) => {
+            return el.id !== editMode.id;
           })
         );
       })
       .catch((error) => {
-        console.error("Error writing document: ", error);
+        console.error("Error removing document: ", error);
       });
   };
 
   return (
     <section className="newTransaction section container">
-      <button className="btn btn-exit" onClick={handleNewTransaction}>
+      <button className="btn btn-exit" onClick={handleExitTransaction}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
       <form className="newTransaction__form">
         <div>
           <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> Wybierz kategorię:
+            <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> {chooseOrEdit} kategorię:
           </p>
           <button className={`${nameOfClassOnClickCategory} btn btn-category`} onClick={handleShowCategoryList}>
             <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
@@ -154,7 +234,7 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
         </div>
         <div>
           <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> Wpisz kwotę:
+            <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> {typeOrEdit} kwotę:
           </p>
           <div className="newTransaction__label newTransaction__label__input">
             <input type="number" placeholder={"0 zł"} name="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
@@ -162,7 +242,7 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
         </div>
         <div>
           <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> Wybierz datę:
+            <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> {chooseOrEdit} datę:
           </p>
           <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
             {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
@@ -176,15 +256,20 @@ export const SectionOfNewOrEditTransaction = ({ setDatabase, setShowNewTransacti
 
         <div>
           <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> Miejsce na notatkę:
+            <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> {typeOrEditNote}:
           </p>
           <div className="newTransaction__label newTransaction__label__input">
             <textarea maxLength="24" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
         </div>
         <button disabled={disabledAddTransaction} onClick={handleAddTransaction} className={`${nameOfClassAddTransaction} btn`}>
-          dodaj
+          {addOrEditButton}
         </button>
+        {editMode !== false && (
+          <button className="btn btn-delete" onClick={handleDeleteTransaction}>
+            Usuń
+          </button>
+        )}
       </form>
     </section>
   );
