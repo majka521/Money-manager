@@ -3,7 +3,6 @@ import { Doughnut } from "react-chartjs-2";
 import { getColor } from "./data/categories";
 
 export const Statistics = ({ database }) => {
-  //Total expenses
   let sum = 0;
   let allCosts = [];
   let allCategoriesTitle = [];
@@ -33,8 +32,6 @@ export const Statistics = ({ database }) => {
               label: "Expenses",
               data: allCosts,
               backgroundColor: allColors,
-              // borderColor: "black",
-              // borderWidth: 1,
             },
           ],
         }}
