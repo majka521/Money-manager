@@ -17,7 +17,7 @@ import {
   faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 
-const categories = [
+export const categories = [
   { category: "groceries", icon: faShoppingBasket, title: "Zakupy spożywcze", color: "#FF4069" },
   { category: "alcohol", icon: faWineGlassAlt, title: "Alkohol", color: "#FF9223" },
   { category: "eatingOut", icon: faPizzaSlice, title: "Jedzenie na mieście", color: "#FFC234" },
@@ -47,5 +47,3 @@ export const getColor = (cat) => {
     return el.category === cat;
   })[0].color;
 };
-
-export default categories;

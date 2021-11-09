@@ -1,50 +1,32 @@
 import React, { useState } from "react";
 import { Header } from "./Header";
-import { Transaction } from "./Transactions";
+import { Transactions } from "./Transactions";
 import { Statistics } from "./Statistics";
 import { TransactionForm } from "./TransactionForm";
 
 export const App = () => {
-  const [showNewTransactionForm, setShowNewTransactionForm] = useState(false);
-  const [showEditTransactionForm, setShowEditTransactionForm] = useState(false);
-  const [editMode, setEditMode] = useState(false); //czy jesteśmy akurat w trybie edycji
-  const [database, setDatabase] = useState([]);
-  const [nameOfClassOfEditingTransaction, setNameOfClassOfEditingTransaction] = useState(false);
+  const [database, setDatabase] = useState([]); // actual database
+  const [showNewTransactionForm, setShowNewTransactionForm] = useState(false); //on/off new transaction form
+  const [showEditTransactionForm, setShowEditTransactionForm] = useState(false); //on/off edit transaction form
+  const [editMode, setEditMode] = useState(false); // on/off edit mode
 
   return (
     <>
       <Header />
-      {showNewTransactionForm === true && (
-        <TransactionForm
-          showNewTransactionForm={showNewTransactionForm}
-          setShowNewTransactionForm={setShowNewTransactionForm}
-          setDatabase={setDatabase}
-          editMode={editMode}
-          setNameOfClassOfEditingTransaction={setNameOfClassOfEditingTransaction}
-          nameOfClassOfEditingTransaction={nameOfClassOfEditingTransaction}
-        />
-      )}
+      {showNewTransactionForm === true && <TransactionForm setDatabase={setDatabase} setShowNewTransactionForm={setShowNewTransactionForm} editMode={false} />}
 
       {showEditTransactionForm === true && (
-        <TransactionForm
-          showEditTransactionForm={showEditTransactionForm}
-          setShowEditTransactionForm={setShowEditTransactionForm}
-          setDatabase={setDatabase}
-          editMode={editMode}
-          setNameOfClassOfEditingTransaction={setNameOfClassOfEditingTransaction}
-          nameOfClassOfEditingTransaction={nameOfClassOfEditingTransaction}
-        />
+        <TransactionForm database={database} setDatabase={setDatabase} setShowEditTransactionForm={setShowEditTransactionForm} editMode={editMode} setEditMode={setEditMode} />
       )}
 
       <main className="mainSection container">
-        <Transaction
+        <Transactions
           database={database}
           setDatabase={setDatabase}
           setShowNewTransactionForm={setShowNewTransactionForm}
           setShowEditTransactionForm={setShowEditTransactionForm}
+          editMode={editMode}
           setEditMode={setEditMode}
-          nameOfClassOfEditingTransaction={nameOfClassOfEditingTransaction}
-          setNameOfClassOfEditingTransaction={setNameOfClassOfEditingTransaction}
         />
         <Statistics database={database} />
       </main>

@@ -3,20 +3,24 @@ import Calendar from "react-calendar";
 import { db } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes, faThumbtack } from "@fortawesome/free-solid-svg-icons";
-import categories from "./data/categories";
+import { categories } from "./data/categories";
 import { getIcon } from "./data/categories";
 
-export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setNameOfClassOfEditingTransaction }) => {
-  const [showCategoryList, setShowCategoryList] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [chevronFirst, setChevronFirst] = useState(faChevronDown);
-  const [chevronSecond, setChevronSecond] = useState(faChevronDown);
-
+export const TransactionForm = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setEditMode }) => {
+  //Set fields of document in database
   const [category, setCategory] = useState("groceries");
   const [categoryTitle, setCategoryTitle] = useState("Zakupy spożywcze");
   const [cost, setCost] = useState("");
   const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState("");
+
+  //Show category list or calendar
+  const [showCategoryList, setShowCategoryList] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  //Up or Down arrows in button
+  const [chevronFirst, setChevronFirst] = useState(faChevronDown);
+  const [chevronSecond, setChevronSecond] = useState(faChevronDown);
 
   //Changes className of buttons like :focus
   const [addClassOnClickCategory, setAddClassOnClickCategory] = useState(false);
@@ -38,20 +42,7 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
     }
   }, [addClassOnClickDate]);
 
-  //AddTransaction button validation
-  const [nameOfClassAddTransaction, setNameOfClassAddTransaction] = useState("btn-inActive");
-  const [disabledAddTransaction, setDisabledAddTransaction] = useState(true);
-  useEffect(() => {
-    if (cost > 0 && cost !== "") {
-      setNameOfClassAddTransaction("btn-addTransaction");
-      setDisabledAddTransaction("");
-    } else {
-      setNameOfClassAddTransaction("btn-inActive");
-      setDisabledAddTransaction(true);
-    }
-  }, [cost]);
-
-  //Edit mode
+  //Edit mode - settings
   const [chooseOrEdit, setChooseOrEdit] = useState("Wybierz");
   const [typeOrEdit, setTypeOrEdit] = useState("Wpisz");
   const [typeOrEditNote, setTypeOrEditNote] = useState("Miejsce na notatkę");
@@ -67,41 +58,22 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
       setCost(editMode.cost);
       setDate(new Date(editMode.date.seconds * 1000));
       setDescription(editMode.description);
-    } else {
-      setChooseOrEdit("Wybierz");
-      setTypeOrEdit("Wpisz");
-      setTypeOrEditNote("Miejsce na notatkę");
-      setAddOrEditButton("Dodaj");
-      setCategory("groceries");
-      setCategoryTitle("Zakupy spożywcze");
-      setCost("");
-      setDate(new Date());
-      setDescription("");
     }
   }, [editMode]);
 
+  //Show category list button
   const handleShowCategoryList = (e) => {
     e.preventDefault();
     setShowCategoryList((state) => !state);
     setAddClassOnClickCategory((state) => !state);
-
+    //Up or Down arrows in button
     if (chevronFirst === faChevronDown) {
       setChevronFirst(faChevronUp);
     } else {
       setChevronFirst(faChevronDown);
     }
   };
-  const handleShowCalendar = (e) => {
-    e.preventDefault();
-    setShowCalendar((state) => !state);
-    setAddClassOnClickDate((state) => !state);
-
-    if (chevronSecond === faChevronDown) {
-      setChevronSecond(faChevronUp);
-    } else {
-      setChevronSecond(faChevronDown);
-    }
-  };
+  //Choose category buttons
   const handleChooseCategory = (e, selectedCategory, selectedTitle) => {
     e.preventDefault();
     setCategory(selectedCategory);
@@ -110,6 +82,20 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
     setChevronFirst(faChevronDown);
     setAddClassOnClickCategory((state) => !state);
   };
+
+  //Show Calendar button
+  const handleShowCalendar = (e) => {
+    e.preventDefault();
+    setShowCalendar((state) => !state);
+    setAddClassOnClickDate((state) => !state);
+    //Up or Down arrows in button
+    if (chevronSecond === faChevronDown) {
+      setChevronSecond(faChevronUp);
+    } else {
+      setChevronSecond(faChevronDown);
+    }
+  };
+  //Choose Date buttons
   const handleChooseDate = (date) => {
     setDate(date);
     setShowCalendar(false);
@@ -117,50 +103,33 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
     setAddClassOnClickDate((state) => !state);
   };
 
-  const handleExitTransaction = () => {
-    if (editMode !== false) {
-      setShowEditTransactionForm((state) => !state);
-      setNameOfClassOfEditingTransaction("");
+  //AddTransaction button validation
+  const [nameOfClassAddTransaction, setNameOfClassAddTransaction] = useState("btn-inActive");
+  const [disabledAddTransaction, setDisabledAddTransaction] = useState(true);
+  useEffect(() => {
+    if (cost > 0 || cost !== "") {
+      // if (parseFloat(cost) !== parseFloat(cost.toFixed(2))) {
+      setNameOfClassAddTransaction("btn-addTransaction");
+      setDisabledAddTransaction("");
+      // }
     } else {
-      setShowNewTransactionForm((state) => !state);
+      setNameOfClassAddTransaction("btn-inActive");
+      setDisabledAddTransaction(true);
     }
-  };
+  }, [cost]);
 
+  //New transaction and EditMode - add or edit buttons
   const handleAddTransaction = (e) => {
     e.preventDefault();
-
-    if (editMode !== false) {
-      setShowEditTransactionForm((state) => !state);
-
-      //firebase - edit
-      // db.collection("transaction")
-      //   .add({
-      //     category: category,
-      //     categoryTitle: categoryTitle,
-      //     cost: cost,
-      //     date: date,
-      //     description: description,
-      //   })
-      //   .then((doc) => {
-      //     setDatabase((state) =>
-      //       [...state, { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }].sort((a, b) => {
-      //         return b.date.seconds - a.date.seconds;
-      //       })
-      //     );
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error writing document: ", error);
-      //   });
-    } else {
-      setShowNewTransactionForm((state) => !state);
-
+    //New transaction - add button
+    if (editMode === false) {
+      setShowNewTransactionForm(false);
       setCategory("groceries");
       setCategoryTitle("Zakupy spożywcze");
       setCost(0);
       setDate(new Date());
       setDescription("");
-
-      //firebase - add to database
+      //Firebase - add to database
       db.collection("transaction")
         .add({
           category: category,
@@ -180,14 +149,48 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
           console.error("Error writing document: ", error);
         });
     }
+    //EditMode - edit button
+    else if (editMode !== false) {
+      setShowEditTransactionForm(false);
+      setEditMode(false);
+      //Firebase - edit
+      db.collection("transaction")
+        .doc(editMode.id)
+        .set({
+          category: category,
+          categoryTitle: categoryTitle,
+          cost: cost,
+          date: date,
+          description: description,
+        })
+        .then((doc) => {
+          setDatabase(
+            (state) =>
+              database.filter((el) => {
+                return el.id !== editMode.id;
+              })
+            // .push({ category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id })
+
+            // [ ...state,
+
+            //   // { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }
+
+            // ].sort((a, b) => {
+            //   return b.date.seconds - a.date.seconds;
+            // })
+          );
+        })
+        .catch((error) => {
+          console.error("Error editing document: ", error);
+        });
+    }
   };
 
+  //EditMode - delete button
   const handleDeleteTransaction = (e) => {
     e.preventDefault();
     setShowEditTransactionForm(false);
-    // setNameOfClassOfEditingTransaction("");
-
-    // firebase - delete
+    // Firebase - delete
     db.collection("transaction")
       .doc(editMode.id)
       .delete()
@@ -201,6 +204,16 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
       .catch((error) => {
         console.error("Error removing document: ", error);
       });
+  };
+
+  //Exit buttons
+  const handleExitTransaction = () => {
+    if (editMode !== false) {
+      setShowEditTransactionForm(false);
+      setEditMode(false);
+    } else {
+      setShowNewTransactionForm(false);
+    }
   };
 
   return (
@@ -237,7 +250,7 @@ export const TransactionForm = ({ setDatabase, setShowNewTransactionForm, setSho
             <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> {typeOrEdit} kwotę:
           </p>
           <div className="newTransaction__label newTransaction__label__input">
-            <input type="number" placeholder={"0 zł"} name="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
+            <input type="number" placeholder={"0 zł"} name="cost" value={cost} step="0.01" onChange={(e) => setCost(e.target.value)} />
           </div>
         </div>
         <div>

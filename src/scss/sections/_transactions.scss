@@ -1,13 +1,25 @@
 .history {
   margin: 3% 2% 5% 0;
+  overflow: hidden;
 
   &__header {
     position: relative;
   }
-
-  &__allList {
+  ul {
+    max-height: 90%;
+    overflow-y: scroll;
   }
+
   &__li {
+    a:hover {
+      background-color: $color-gray-lighter;
+      border-radius: 10px;
+    }
+  }
+
+  &__editing {
+    background-color: $color-pink-pastel-lighter;
+    border-radius: 10px;
   }
 
   &__singleTransaction {
@@ -26,18 +38,14 @@
       font-size: 2em;
       margin-right: 20px;
     }
-    &__categoryTitle {
-    }
     &__description {
       font-size: 1.6rem;
       color: $color-gray-strong;
     }
     &__cost {
+      padding: 0 10px 0 0;
       color: $color-red-strong;
       font-weight: 700;
     }
-  }
-  &__editing {
-    background-color: $color-gray-light;
   }
 }

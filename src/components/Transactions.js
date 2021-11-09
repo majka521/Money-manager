@@ -4,8 +4,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
 import { getColor, getIcon } from "./data/categories";
 
-export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, setEditMode, nameOfClassOfEditingTransaction, setNameOfClassOfEditingTransaction }) => {
-  // firebase - pobranie istniejących danych
+export const Transactions = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setEditMode }) => {
+  // firebase - ordered existing data
   useEffect(() => {
     db.collection("transaction")
       .orderBy("date", "desc")
@@ -23,20 +23,16 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, 
       });
   }, [setDatabase]);
 
+  // Add new transaction button
   const handleNewTransaction = () => {
     setShowNewTransactionForm((state) => !state);
-    setEditMode(false);
   };
 
-  let elementAIndex = 0;
-  const handleEditTransaction = (e, data, index) => {
-    elementAIndex = index;
+  // Edit transaction button
+  const handleEditTransaction = (e, data) => {
     e.preventDefault();
-    setShowEditTransactionForm((state) => !state);
+    setShowEditTransactionForm(true);
     setEditMode(data);
-    setNameOfClassOfEditingTransaction("history__editing");
-    document.getElementsByClassName(`history__li`)[index].classList.add(nameOfClassOfEditingTransaction);
-    console.log(nameOfClassOfEditingTransaction);
   };
 
   return (
@@ -51,16 +47,16 @@ export const Transaction = ({ database, setDatabase, setShowNewTransactionForm, 
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        <ul className="history__allList">
-          {database.map((data, index) => {
+        <ul>
+          {database.map((data) => {
             return (
-              <li key={data.id} className={`history__li`}>
-                <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data, index)}>
+              <li key={data.id} className={`history__li ${editMode.id === data.id ? "history__editing" : ""}`}>
+                <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data)}>
                   <div className="history__singleTransaction__group">
                     <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
                     <div>
                       <p>{new Date(data.date.seconds * 1000).toLocaleDateString()}</p>
-                      <h3 className="history__singleTransaction__categoryTitle">{data.categoryTitle}</h3>
+                      <h3>{data.categoryTitle}</h3>
                       <p className="history__singleTransaction__description">{data.description}</p>
                     </div>
                   </div>

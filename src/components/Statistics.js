@@ -8,6 +8,8 @@ export const Statistics = ({ database }) => {
   let allCategoriesTitle = [];
   let allColors = [];
 
+  //nowy obiekt, for Each, {groceries: {title: "Zakupy spozywcze" cost:10} jesli istnieje to += jesli nie to nowy}
+
   database.map((el) => {
     sum += +el.cost;
     allCosts.push(el.cost);
@@ -22,7 +24,7 @@ export const Statistics = ({ database }) => {
         <p className="section__timePeriod">tu będą daty z okresu czasu</p>
       </div>
       <h2>
-        Łącznie kwota wydatków: <span className="statistics__sum">-{sum}</span>
+        Łącznie kwota wydatków: <span className="statistics__sum">-{sum.toFixed(2)}</span>
       </h2>
       <Doughnut
         data={{

@@ -81,10 +81,3 @@
     border: none;
   }
 }
-.selected {
-  &Category,
-  &Date {
-    color: $color-pink-strong;
-    border-color: $color-pink-strong;
-  }
-}
