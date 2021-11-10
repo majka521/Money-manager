@@ -3,18 +3,34 @@ import { Doughnut } from "react-chartjs-2";
 import { getColor } from "./data/categories";
 
 export const Statistics = ({ database }) => {
+  const uniqueDatabase = {};
+  database.forEach(({ category, cost, categoryTitle }) => {
+    // Jeżeli taki klucz juz mamy to dodaj sume
+    if (category in uniqueDatabase) {
+      uniqueDatabase[category].sum += parseInt(cost);
+      uniqueDatabase[category].quantity++;
+      // Jeżeli nie mamy takiego klucza to go zrob i stworz obiekt
+    } else {
+      uniqueDatabase[category] = {
+        categoryTitle,
+        category,
+        sum: parseInt(cost),
+        quantity: 1,
+      };
+    }
+  });
+  // Konwersja obiektu na tablice obiektów
+  const uniqueDatabaseArray = Object.values(uniqueDatabase);
+
   let sum = 0;
-  let allCosts = [];
+  let allSum = [];
   let allCategoriesTitle = [];
   let allColors = [];
-
-  //nowy obiekt, for Each, {groceries: {title: "Zakupy spozywcze" cost:10} jesli istnieje to += jesli nie to nowy}
-
-  database.map((el) => {
-    sum += +el.cost;
-    allCosts.push(el.cost);
+  uniqueDatabaseArray.map((el) => {
+    allSum.push(el.sum);
     allCategoriesTitle.push(el.categoryTitle);
     allColors.push(getColor(el.category));
+    return (sum += +el.sum);
   });
 
   return (
@@ -24,18 +40,31 @@ export const Statistics = ({ database }) => {
         <p className="section__timePeriod">tu będą daty z okresu czasu</p>
       </div>
       <h2>
-        Łącznie kwota wydatków: <span className="statistics__sum">-{sum.toFixed(2)}</span>
+        Łącznie kwota wydatków: <span className="statistics__sum">-{sum.toFixed(2)} zł</span>
       </h2>
       <Doughnut
         data={{
           labels: allCategoriesTitle,
           datasets: [
             {
-              label: "Expenses",
-              data: allCosts,
+              data: allSum,
               backgroundColor: allColors,
             },
           ],
+        }}
+        options={{
+          plugins: {
+            tooltip: {
+              enabled: true,
+              usePointStyle: true,
+              callbacks: {
+                label: (data) => {
+                  let percent = (data.parsed * 100) / sum;
+                  return data.label + `: ` + data.parsed + "zł - " + (Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)) + "%";
+                },
+              },
+            },
+          },
         }}
       />
     </section>

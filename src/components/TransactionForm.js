@@ -107,11 +107,9 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
   const [nameOfClassAddTransaction, setNameOfClassAddTransaction] = useState("btn-inActive");
   const [disabledAddTransaction, setDisabledAddTransaction] = useState(true);
   useEffect(() => {
-    if (cost > 0 || cost !== "") {
-      // if (parseFloat(cost) !== parseFloat(cost.toFixed(2))) {
+    if (cost > 0 && cost !== "" && parseFloat(cost) === parseFloat(parseFloat(cost).toFixed(2))) {
       setNameOfClassAddTransaction("btn-addTransaction");
       setDisabledAddTransaction("");
-      // }
     } else {
       setNameOfClassAddTransaction("btn-inActive");
       setDisabledAddTransaction(true);
@@ -163,21 +161,16 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
           date: date,
           description: description,
         })
-        .then((doc) => {
-          setDatabase(
-            (state) =>
-              database.filter((el) => {
+        .then(() => {
+          setDatabase((state) =>
+            state
+              .filter((el) => {
                 return el.id !== editMode.id;
               })
-            // .push({ category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id })
-
-            // [ ...state,
-
-            //   // { category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: doc.id }
-
-            // ].sort((a, b) => {
-            //   return b.date.seconds - a.date.seconds;
-            // })
+              .concat([{ category: category, categoryTitle: categoryTitle, cost: cost, date: { seconds: date.getTime() / 1000 }, description: description, id: editMode.id }])
+              .sort((a, b) => {
+                return b.date.seconds - a.date.seconds;
+              })
           );
         })
         .catch((error) => {
