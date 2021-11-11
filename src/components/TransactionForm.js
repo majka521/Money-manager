@@ -6,7 +6,7 @@ import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes
 import { categories } from "./data/categories";
 import { getIcon } from "./data/categories";
 
-export const TransactionForm = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setEditMode }) => {
+export const TransactionForm = ({ database, setDatabase, setNewTransactionMode, editMode, setEditMode }) => {
   //Set fields of document in database
   const [category, setCategory] = useState("groceries");
   const [categoryTitle, setCategoryTitle] = useState("Zakupy spożywcze");
@@ -121,7 +121,7 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
     e.preventDefault();
     //New transaction - add button
     if (editMode === false) {
-      setShowNewTransactionForm(false);
+      setNewTransactionMode(false);
       setCategory("groceries");
       setCategoryTitle("Zakupy spożywcze");
       setCost(0);
@@ -149,7 +149,6 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
     }
     //EditMode - edit button
     else if (editMode !== false) {
-      setShowEditTransactionForm(false);
       setEditMode(false);
       //Firebase - edit
       db.collection("transaction")
@@ -182,7 +181,7 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
   //EditMode - delete button
   const handleDeleteTransaction = (e) => {
     e.preventDefault();
-    setShowEditTransactionForm(false);
+    setEditMode(false);
     // Firebase - delete
     db.collection("transaction")
       .doc(editMode.id)
@@ -202,10 +201,9 @@ export const TransactionForm = ({ database, setDatabase, setShowNewTransactionFo
   //Exit buttons
   const handleExitTransaction = () => {
     if (editMode !== false) {
-      setShowEditTransactionForm(false);
       setEditMode(false);
     } else {
-      setShowNewTransactionForm(false);
+      setNewTransactionMode(false);
     }
   };
 

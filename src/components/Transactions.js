@@ -5,7 +5,7 @@ import { db } from "../firebase";
 import { SingleTransaction } from "./SingleTransaction";
 // import { getColor, getIcon } from "./data/categories";
 
-export const Transactions = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setEditMode }) => {
+export const Transactions = ({ database, setDatabase, setNewTransactionMode, editMode, setEditMode }) => {
   // firebase - ordered existing data
   useEffect(() => {
     db.collection("transaction")
@@ -26,7 +26,7 @@ export const Transactions = ({ database, setDatabase, setShowNewTransactionForm,
 
   // Add new transaction button
   const handleNewTransaction = () => {
-    setShowNewTransactionForm((state) => !state);
+    setNewTransactionMode((state) => !state);
   };
 
   // // Edit transaction button
@@ -59,7 +59,6 @@ export const Transactions = ({ database, setDatabase, setShowNewTransactionForm,
                 dataCost={data.cost}
                 dataDescription={data.description}
                 data={data}
-                setShowEditTransactionForm={setShowEditTransactionForm}
                 setEditMode={setEditMode}
               />
               // <li key={data.id} className={`history__li ${editMode.id === data.id ? "history__editing" : ""}`}>

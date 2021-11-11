@@ -1,11 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const SingleTransaction = ({ dataID, editModeID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setShowEditTransactionForm, setEditMode }) => {
+export const SingleTransaction = ({ dataID, editModeID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setEditMode }) => {
   // Edit transaction button
   const handleEditTransaction = (e, data) => {
     e.preventDefault();
-    setShowEditTransactionForm(true);
     setEditMode(data);
   };
 
