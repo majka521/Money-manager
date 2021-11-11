@@ -11,10 +11,10 @@
   &-login {
     padding: 1rem 2rem;
     font-weight: 700;
-    border: 1px solid $color-optional;
+    border: 1px solid $color-pink-strong;
     &:hover {
-      box-shadow: 0px 0px 20px 0px $color-pink-pastel;
-      border: 1px solid $color-text;
+      box-shadow: 0px 0px 20px 0px $color-pink-strong;
+      border: 1px solid $color-pink-strong;
     }
   }
 
@@ -25,7 +25,7 @@
     font-size: 4rem;
     color: $color-pink-strong;
     &:hover {
-      color: $color-pink-pastel;
+      color: $color-red-strong;
     }
   }
 

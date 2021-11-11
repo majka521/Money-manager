@@ -1,15 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const SingleTransaction = ({ dataID, editModeID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setEditMode }) => {
+export const SingleTransaction = ({ dataID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setActiveCategory, editModeID, setEditMode }) => {
   // Edit transaction button
   const handleEditTransaction = (e, data) => {
     e.preventDefault();
     setEditMode(data);
   };
+  // Set SingleStatistic currently title
+  setActiveCategory(dataCategoryTitle);
 
   return (
-    <li key={dataID} className={`history__li ${editModeID === dataID ? "history__editing" : ""}`}>
+    <li className={`history__li ${editModeID === dataID ? "history__editing" : ""}`}>
       <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data)}>
         <div className="history__singleTransaction__group">
           <FontAwesomeIcon icon={getIcon(dataCategory)} className="history__singleTransaction__icon" style={{ color: getColor(dataCategory) }} />
@@ -19,7 +21,7 @@ export const SingleTransaction = ({ dataID, editModeID, dataCategory, dataCatego
             <p className="history__singleTransaction__description">{dataDescription}</p>
           </div>
         </div>
-        <p className="history__singleTransaction__cost">-{dataCost} zł</p>
+        <p className="history__singleTransaction__cost">-{parseFloat(dataCost).toFixed(2)} zł</p>
       </a>
     </li>
   );

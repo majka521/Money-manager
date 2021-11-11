@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import { db } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes, faThumbtack } from "@fortawesome/free-solid-svg-icons";
-import { categories } from "./data/categories";
-import { getIcon } from "./data/categories";
+import { db } from "../firebase";
+import { categories, getIcon } from "./data/categories";
 
-export const TransactionForm = ({ database, setDatabase, setNewTransactionMode, editMode, setEditMode }) => {
+export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, setEditMode }) => {
   //Set fields of document in database
   const [category, setCategory] = useState("groceries");
   const [categoryTitle, setCategoryTitle] = useState("Zakupy spożywcze");
@@ -18,7 +17,7 @@ export const TransactionForm = ({ database, setDatabase, setNewTransactionMode, 
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  //Up or Down arrows in button
+  //Up or down arrows in button
   const [chevronFirst, setChevronFirst] = useState(faChevronDown);
   const [chevronSecond, setChevronSecond] = useState(faChevronDown);
 
@@ -66,7 +65,7 @@ export const TransactionForm = ({ database, setDatabase, setNewTransactionMode, 
     e.preventDefault();
     setShowCategoryList((state) => !state);
     setAddClassOnClickCategory((state) => !state);
-    //Up or Down arrows in button
+    //Up or down arrows in button
     if (chevronFirst === faChevronDown) {
       setChevronFirst(faChevronUp);
     } else {
@@ -83,19 +82,19 @@ export const TransactionForm = ({ database, setDatabase, setNewTransactionMode, 
     setAddClassOnClickCategory((state) => !state);
   };
 
-  //Show Calendar button
+  //Show calendar button
   const handleShowCalendar = (e) => {
     e.preventDefault();
     setShowCalendar((state) => !state);
     setAddClassOnClickDate((state) => !state);
-    //Up or Down arrows in button
+    //Up or down arrows in button
     if (chevronSecond === faChevronDown) {
       setChevronSecond(faChevronUp);
     } else {
       setChevronSecond(faChevronDown);
     }
   };
-  //Choose Date buttons
+  //Choose date buttons
   const handleChooseDate = (date) => {
     setDate(date);
     setShowCalendar(false);

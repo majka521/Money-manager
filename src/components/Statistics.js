@@ -1,43 +1,49 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Doughnut } from "react-chartjs-2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const Statistics = ({ database, statisticMode, setStatisticMode }) => {
+export const Statistics = ({ database, statisticMode, setStatisticMode, setSingleStatistic }) => {
+  //New array with unique categories (one each, no repetitions)
   const uniqueDatabase = {};
   database.forEach(({ category, cost, categoryTitle }) => {
-    // Jeżeli taki klucz juz mamy to dodaj sume
+    // If we already have this category - add the sum
     if (category in uniqueDatabase) {
-      uniqueDatabase[category].sum += parseInt(cost);
+      uniqueDatabase[category].sum += parseFloat(cost);
       uniqueDatabase[category].quantity++;
-      // Jeżeli nie mamy takiego klucza to go zrob i stworz obiekt
+      // If we don't have this category - make an object
     } else {
       uniqueDatabase[category] = {
         categoryTitle,
         category,
-        sum: parseInt(cost),
+        sum: parseFloat(cost),
         quantity: 1,
       };
     }
   });
-  // Konwersja obiektu na tablice obiektów
   const uniqueDatabaseArray = Object.values(uniqueDatabase);
 
-  let sum = 0;
+  //Prepare arrays for chart and total sum of expenses
+  let totalSum = 0;
   let allSum = [];
   let allCategoriesTitle = [];
   let allColors = [];
   uniqueDatabaseArray.map((el) => {
-    allSum.push(el.sum);
+    allSum.push(parseFloat(el.sum).toFixed(2));
     allCategoriesTitle.push(el.categoryTitle);
     allColors.push(getColor(el.category));
-    return (sum += +el.sum);
+    return (totalSum += +el.sum);
   });
 
+  //Choose category buttons
   const handleStatisticsTransaction = (e, data) => {
     e.preventDefault();
-    // setShowEditTransactionForm(true);
     setStatisticMode(data);
+    setSingleStatistic(
+      database.filter((el) => {
+        return el.category === data.category;
+      })
+    );
   };
 
   return (
@@ -47,7 +53,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode }) => {
         <p className="section__timePeriod">tu będą daty z okresu czasu</p>
       </div>
       <h2>
-        Łącznie kwota wydatków: <span className="statistics__sum">-{sum.toFixed(2)} zł</span>
+        Łącznie kwota wydatków: <span className="statistics__sum">-{totalSum.toFixed(2)} zł</span>
       </h2>
       <div className="statistics__doughnut">
         <Doughnut
@@ -68,7 +74,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode }) => {
                 usePointStyle: true,
                 callbacks: {
                   label: (data) => {
-                    let percent = (data.parsed * 100) / sum;
+                    let percent = (data.parsed * 100) / totalSum;
                     return data.label + `: ` + data.parsed + "zł - " + (Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)) + "%";
                   },
                 },
@@ -93,7 +99,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode }) => {
                       <p className="history__singleTransaction__description">Liczba transakcji: {data.quantity}</p>
                     </div>
                   </div>
-                  <p className="history__singleTransaction__cost">-{data.sum} zł</p>
+                  <p className="history__singleTransaction__cost">-{data.sum.toFixed(2)} zł</p>
                 </a>
               </li>
             );

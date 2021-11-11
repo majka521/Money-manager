@@ -4,33 +4,36 @@ import { Transactions } from "./Transactions";
 import { Statistics } from "./Statistics";
 import { TransactionForm } from "./TransactionForm";
 import { SingleStatistic } from "./SingleStatistic";
+import { Footer } from "./Footer";
 
 export const App = () => {
-  const [database, setDatabase] = useState([]); // actual database
+  const [database, setDatabase] = useState([]); //currently database
   const [newTransactionMode, setNewTransactionMode] = useState(false); //on/off new transaction mode
   const [editMode, setEditMode] = useState(false); // on/off edit mode
   const [statisticMode, setStatisticMode] = useState(false); // on/off statistics mode
+  const [singleStatistic, setSingleStatistic] = useState([]); //currently selected category for the statistics
+  const [activeCategory, setActiveCategory] = useState(false); //SingleStatistic currently title
 
-  //połączyć ul ze statistics z singletransaction
-  //nowy komponent singlestatistics
   //daty z okresem czasu
-  //komentarze po angielsku
-  //scss porzadek
-  //footer
+  //żeby singleStatistics nie były klikalne
+  //jak dodaję to mi się nie odświeża w singletransaction statistics
+  //scss - buttons, calendar, transactionForm
+  //favicon
 
   return (
     <>
       <Header />
       {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
 
-      {editMode !== false && <TransactionForm database={database} setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
+      {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
 
       <main className="mainSection container">
-        <Transactions database={database} setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={editMode} setEditMode={setEditMode} />
-        <Statistics database={database} statisticMode={statisticMode} setStatisticMode={setStatisticMode} />
+        <Transactions database={database} setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={editMode} setEditMode={setEditMode} setActiveCategory={setActiveCategory} />
+        <Statistics database={database} statisticMode={statisticMode} setStatisticMode={setStatisticMode} setSingleStatistic={setSingleStatistic} />
       </main>
 
-      {statisticMode !== false && <SingleStatistic />}
+      {statisticMode !== false && <SingleStatistic setStatisticMode={setStatisticMode} singleStatistic={singleStatistic} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />}
+      <Footer />
     </>
   );
 };
