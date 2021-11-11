@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
-import { getColor, getIcon } from "./data/categories";
+import { SingleTransaction } from "./SingleTransaction";
+// import { getColor, getIcon } from "./data/categories";
 
 export const Transactions = ({ database, setDatabase, setShowNewTransactionForm, setShowEditTransactionForm, editMode, setEditMode }) => {
   // firebase - ordered existing data
@@ -28,12 +29,12 @@ export const Transactions = ({ database, setDatabase, setShowNewTransactionForm,
     setShowNewTransactionForm((state) => !state);
   };
 
-  // Edit transaction button
-  const handleEditTransaction = (e, data) => {
-    e.preventDefault();
-    setShowEditTransactionForm(true);
-    setEditMode(data);
-  };
+  // // Edit transaction button
+  // const handleEditTransaction = (e, data) => {
+  //   e.preventDefault();
+  //   setShowEditTransactionForm(true);
+  //   setEditMode(data);
+  // };
 
   return (
     <>
@@ -50,19 +51,30 @@ export const Transactions = ({ database, setDatabase, setShowNewTransactionForm,
         <ul>
           {database.map((data) => {
             return (
-              <li key={data.id} className={`history__li ${editMode.id === data.id ? "history__editing" : ""}`}>
-                <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data)}>
-                  <div className="history__singleTransaction__group">
-                    <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
-                    <div>
-                      <p>{new Date(data.date.seconds * 1000).toLocaleDateString()}</p>
-                      <h3>{data.categoryTitle}</h3>
-                      <p className="history__singleTransaction__description">{data.description}</p>
-                    </div>
-                  </div>
-                  <p className="history__singleTransaction__cost">-{data.cost} zł</p>
-                </a>
-              </li>
+              <SingleTransaction
+                dataID={data.id}
+                editModeID={editMode.id}
+                dataCategory={data.category}
+                dataCategoryTitle={data.categoryTitle}
+                dataCost={data.cost}
+                dataDescription={data.description}
+                data={data}
+                setShowEditTransactionForm={setShowEditTransactionForm}
+                setEditMode={setEditMode}
+              />
+              // <li key={data.id} className={`history__li ${editMode.id === data.id ? "history__editing" : ""}`}>
+              //   <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data)}>
+              //     <div className="history__singleTransaction__group">
+              //       <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
+              //       <div>
+              //         <p>{new Date(data.date.seconds * 1000).toLocaleDateString()}</p>
+              //         <h3>{data.categoryTitle}</h3>
+              //         <p className="history__singleTransaction__description">{data.description}</p>
+              //       </div>
+              //     </div>
+              //     <p className="history__singleTransaction__cost">-{data.cost} zł</p>
+              //   </a>
+              // </li>
             );
           })}
         </ul>

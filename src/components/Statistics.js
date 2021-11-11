@@ -1,8 +1,9 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Doughnut } from "react-chartjs-2";
-import { getColor } from "./data/categories";
+import { getColor, getIcon } from "./data/categories";
 
-export const Statistics = ({ database }) => {
+export const Statistics = ({ database, statisticMode, setStatisticMode }) => {
   const uniqueDatabase = {};
   database.forEach(({ category, cost, categoryTitle }) => {
     // Jeżeli taki klucz juz mamy to dodaj sume
@@ -33,6 +34,12 @@ export const Statistics = ({ database }) => {
     return (sum += +el.sum);
   });
 
+  const handleStatisticsTransaction = (e, data) => {
+    e.preventDefault();
+    // setShowEditTransactionForm(true);
+    setStatisticMode(data);
+  };
+
   return (
     <section className="statistics section">
       <div className="section__header">
@@ -42,31 +49,56 @@ export const Statistics = ({ database }) => {
       <h2>
         Łącznie kwota wydatków: <span className="statistics__sum">-{sum.toFixed(2)} zł</span>
       </h2>
-      <Doughnut
-        data={{
-          labels: allCategoriesTitle,
-          datasets: [
-            {
-              data: allSum,
-              backgroundColor: allColors,
-            },
-          ],
-        }}
-        options={{
-          plugins: {
-            tooltip: {
-              enabled: true,
-              usePointStyle: true,
-              callbacks: {
-                label: (data) => {
-                  let percent = (data.parsed * 100) / sum;
-                  return data.label + `: ` + data.parsed + "zł - " + (Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)) + "%";
+      <div className="statistics__doughnut">
+        <Doughnut
+          data={{
+            labels: allCategoriesTitle,
+            datasets: [
+              {
+                data: allSum,
+                backgroundColor: allColors,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                enabled: true,
+                usePointStyle: true,
+                callbacks: {
+                  label: (data) => {
+                    let percent = (data.parsed * 100) / sum;
+                    return data.label + `: ` + data.parsed + "zł - " + (Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)) + "%";
+                  },
                 },
               },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </div>
+      <ul>
+        {uniqueDatabaseArray
+          .sort((a, b) => {
+            return b.sum - a.sum;
+          })
+          .map((data) => {
+            return (
+              <li key={data.category} className={`history__li ${statisticMode.category === data.category ? "history__editing" : ""} `}>
+                <a href="/" className={`history__singleTransaction`} onClick={(e) => handleStatisticsTransaction(e, data)}>
+                  <div className="history__singleTransaction__group">
+                    <FontAwesomeIcon icon={getIcon(data.category)} className="history__singleTransaction__icon" style={{ color: getColor(data.category) }} />
+                    <div>
+                      <h3>{data.categoryTitle}</h3>
+                      <p className="history__singleTransaction__description">Liczba transakcji: {data.quantity}</p>
+                    </div>
+                  </div>
+                  <p className="history__singleTransaction__cost">-{data.sum} zł</p>
+                </a>
+              </li>
+            );
+          })}
+      </ul>
     </section>
   );
 };

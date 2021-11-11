@@ -5,4 +5,11 @@
     font-weight: 700;
     color: $color-red-strong;
   }
+  &__doughnut {
+    padding: 4% 10% 4%;
+  }
+  ul {
+    max-height: 28%;
+    overflow-y: scroll;
+  }
 }
