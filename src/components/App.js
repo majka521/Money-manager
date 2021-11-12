@@ -12,13 +12,10 @@ export const App = () => {
   const [editMode, setEditMode] = useState(false); // on/off edit mode
   const [statisticMode, setStatisticMode] = useState(false); // on/off statistics mode
   const [singleStatistic, setSingleStatistic] = useState([]); //currently selected category for the statistics
-  const [activeCategory, setActiveCategory] = useState(false); //SingleStatistic currently title
-
-  //daty z okresem czasu
-  //żeby singleStatistics nie były klikalne
-  //jak dodaję to mi się nie odświeża w singletransaction statistics
-  //scss - buttons, calendar, transactionForm
-  //favicon
+  const [activeCategory, setActiveCategory] = useState(false); //SingleStatistic currently category title
+  const [activeCategorySum, setActiveCategorySum] = useState(false); //SingleStatistic currently category sum
+  const [currentlyDateStart, setCurrentlyDateStart] = useState(false); //Currently dates
+  const [currentlyDateEnd, setCurrentlyDateEnd] = useState(false); //Currently dates
 
   return (
     <>
@@ -28,12 +25,47 @@ export const App = () => {
       {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
 
       <main className="mainSection container">
-        <Transactions database={database} setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={editMode} setEditMode={setEditMode} setActiveCategory={setActiveCategory} />
-        <Statistics database={database} statisticMode={statisticMode} setStatisticMode={setStatisticMode} setSingleStatistic={setSingleStatistic} />
+        <Transactions
+          database={database}
+          setDatabase={setDatabase}
+          setNewTransactionMode={setNewTransactionMode}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          setActiveCategory={setActiveCategory}
+          setActiveCategorySum={setActiveCategorySum}
+          currentlyDateStart={currentlyDateStart}
+          setCurrentlyDateStart={setCurrentlyDateStart}
+          currentlyDateEnd={currentlyDateEnd}
+          setCurrentlyDateEnd={setCurrentlyDateEnd}
+        />
+        <Statistics
+          database={database}
+          statisticMode={statisticMode}
+          setStatisticMode={setStatisticMode}
+          setSingleStatistic={setSingleStatistic}
+          currentlyDateStart={currentlyDateStart}
+          currentlyDateEnd={currentlyDateEnd}
+        />
       </main>
 
-      {statisticMode !== false && <SingleStatistic setStatisticMode={setStatisticMode} singleStatistic={singleStatistic} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />}
+      {statisticMode !== false && (
+        <SingleStatistic
+          setStatisticMode={setStatisticMode}
+          singleStatistic={singleStatistic}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          activeCategorySum={activeCategorySum}
+          setActiveCategorySum={setActiveCategorySum}
+          currentlyDateStart={currentlyDateStart}
+          currentlyDateEnd={currentlyDateEnd}
+        />
+      )}
       <Footer />
     </>
   );
 };
+
+//żeby singleStatistics nie były klikalne
+//niedziela w kalendarzu
+//jak dodaję to mi się nie odświeża w singletransaction statistics
+//logowanie

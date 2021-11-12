@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const Statistics = ({ database, statisticMode, setStatisticMode, setSingleStatistic }) => {
+export const Statistics = ({ database, statisticMode, setStatisticMode, setSingleStatistic, currentlyDateStart, currentlyDateEnd }) => {
   //New array with unique categories (one each, no repetitions)
   const uniqueDatabase = {};
   database.forEach(({ category, cost, categoryTitle }) => {
@@ -50,11 +50,22 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
     <section className="statistics section">
       <div className="section__header">
         <h2 className="section__title">Statystyki</h2>
-        <p className="section__timePeriod">tu będą daty z okresu czasu</p>
+        {database.length === 0 ? (
+          <h1>Ładuję dane...</h1>
+        ) : (
+          <p className="section__timePeriod">
+            {currentlyDateStart} - {currentlyDateEnd}
+          </p>
+        )}
       </div>
-      <h2>
-        Łącznie kwota wydatków: <span className="statistics__sum">-{totalSum.toFixed(2)} zł</span>
-      </h2>
+      {database.length === 0 ? (
+        <h1>Ładuję dane...</h1>
+      ) : (
+        <h2>
+          Łącznie kwota wydatków: <span className="statistics__sum">-{totalSum.toFixed(2)} zł</span>
+        </h2>
+      )}
+
       <div className="statistics__doughnut">
         <Doughnut
           data={{

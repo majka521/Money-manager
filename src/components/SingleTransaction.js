@@ -1,14 +1,18 @@
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const SingleTransaction = ({ dataID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setActiveCategory, editModeID, setEditMode }) => {
+export const SingleTransaction = ({ dataID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setActiveCategory, editModeID, setEditMode, setActiveCategorySum, sum }) => {
   // Edit transaction button
   const handleEditTransaction = (e, data) => {
     e.preventDefault();
     setEditMode(data);
   };
-  // Set SingleStatistic currently title
-  setActiveCategory(dataCategoryTitle);
+  // Set SingleStatistic currently title and sum
+  useEffect(() => {
+    setActiveCategory(dataCategoryTitle);
+    setActiveCategorySum(parseFloat(sum).toFixed(2));
+  });
 
   return (
     <li className={`history__li ${editModeID === dataID ? "history__editing" : ""}`}>

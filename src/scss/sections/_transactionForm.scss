@@ -8,7 +8,7 @@
     justify-content: space-between;
   }
   &__description {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     padding-bottom: 8px;
   }
   &__icon {
@@ -29,7 +29,7 @@
     width: 220px;
     border-radius: 10px;
     :hover {
-      background-color: $color-gray-light;
+      background-color: $color-gray-lighter;
     }
     :first-child {
       border-top-left-radius: 10px;

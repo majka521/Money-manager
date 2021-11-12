@@ -1,8 +1,7 @@
 .btn {
   color: $color-text;
-  font-size: 1.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.1rem;
   border: none;
   border-radius: 10rem;
   background: none;
@@ -13,8 +12,7 @@
     font-weight: 700;
     border: 1px solid $color-pink-strong;
     &:hover {
-      box-shadow: 0px 0px 20px 0px $color-pink-strong;
-      border: 1px solid $color-pink-strong;
+      box-shadow: 0px 0px 15px 0px $color-pink-strong;
     }
   }
 
@@ -44,7 +42,7 @@
     color: $color-pink-strong;
     border-color: $color-pink-strong;
     &:hover {
-      color: $color-primary;
+      color: $color-light;
       background-color: $color-pink-strong;
       border: 1px solid $color-text;
     }

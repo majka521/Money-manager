@@ -30,10 +30,6 @@
       }
     }
     &__month-view {
-      &__weekdays__weekday {
-        padding: 0.5em, 0;
-      }
-
       &__days > button {
         &:last-child {
           border-bottom-right-radius: 10px;

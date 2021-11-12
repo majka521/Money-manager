@@ -4,7 +4,30 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
 import { SingleTransaction } from "./SingleTransaction";
 
-export const Transactions = ({ database, setDatabase, setNewTransactionMode, editMode, setEditMode, setActiveCategory }) => {
+export const Transactions = ({
+  database,
+  setDatabase,
+  setNewTransactionMode,
+  editMode,
+  setEditMode,
+  setActiveCategory,
+  setActiveCategorySum,
+  currentlyDateStart,
+  setCurrentlyDateStart,
+  currentlyDateEnd,
+  setCurrentlyDateEnd,
+}) => {
+  //Set first and last date
+  let datesArray = [];
+  database.map((data) => {
+    datesArray.push(data.date.seconds);
+    return datesArray;
+  });
+  useEffect(() => {
+    setCurrentlyDateEnd(new Date(datesArray[0] * 1000).toLocaleDateString());
+    setCurrentlyDateStart(new Date(datesArray[datesArray.length - 1] * 1000).toLocaleDateString());
+  });
+
   // Firebase - ordered existing data
   useEffect(() => {
     db.collection("transaction")
@@ -27,19 +50,25 @@ export const Transactions = ({ database, setDatabase, setNewTransactionMode, edi
   const handleNewTransaction = () => {
     setNewTransactionMode((state) => !state);
   };
-
   return (
     <>
       <section className="history section">
         <div className="section__header history__header">
           <div>
             <h2 className="section__title">Transakcje</h2>
-            <p className="section__timePeriod">tu będą daty z okresu czasu</p>
+            {database.length === 0 ? (
+              <h1>Ładuję dane...</h1>
+            ) : (
+              <p className="section__timePeriod">
+                {currentlyDateStart} - {currentlyDateEnd}
+              </p>
+            )}
           </div>
           <button className="btn btn-newTransaction" onClick={handleNewTransaction}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
+        {database.length === 0 ? <h1>Ładuję dane...</h1> : ""}
         <ul>
           {database.map((data) => {
             return (
@@ -54,6 +83,7 @@ export const Transactions = ({ database, setDatabase, setNewTransactionMode, edi
                 setActiveCategory={setActiveCategory}
                 editModeID={editMode.id}
                 setEditMode={setEditMode}
+                setActiveCategorySum={setActiveCategorySum}
               />
             );
           })}

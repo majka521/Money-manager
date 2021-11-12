@@ -262,7 +262,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
             <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> {typeOrEditNote}:
           </p>
           <div className="newTransaction__label newTransaction__label__input">
-            <textarea maxLength="24" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <textarea maxLength="28" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
         </div>
         <button disabled={disabledAddTransaction} onClick={handleAddTransaction} className={`${nameOfClassAddTransaction} btn`}>
