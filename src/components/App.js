@@ -66,6 +66,6 @@ export const App = () => {
 };
 
 //żeby singleStatistics nie były klikalne
+//Nowa kategoria - kliknięcie poza listę kategorii czy kalendarz ma chować liste kategorii czy kalendarz
 //niedziela w kalendarzu
-//jak dodaję to mi się nie odświeża w singletransaction statistics
 //logowanie

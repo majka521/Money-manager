@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
@@ -23,6 +23,12 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
   });
   const uniqueDatabaseArray = Object.values(uniqueDatabase);
 
+  //Sort by Sum
+  const sortBySum = (a, b) => {
+    return b.sum - a.sum;
+  };
+  uniqueDatabaseArray.sort(sortBySum);
+
   //Prepare arrays for chart and total sum of expenses
   let totalSum = 0;
   let allSum = [];
@@ -35,16 +41,20 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
     return (totalSum += +el.sum);
   });
 
-  //Choose category buttons
+  //Buttons - choose category for statistics
+  const [dataCat, seDataCat] = useState("");
   const handleStatisticsTransaction = (e, data) => {
     e.preventDefault();
     setStatisticMode(data);
+    seDataCat(data.category);
+  };
+  useEffect(() => {
     setSingleStatistic(
       database.filter((el) => {
-        return el.category === data.category;
+        return el.category === dataCat;
       })
     );
-  };
+  }, [database, dataCat, setSingleStatistic]);
 
   return (
     <section className="statistics section">
