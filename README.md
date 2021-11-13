@@ -11,7 +11,7 @@ Użytkownik wprowadzając ręcznie kwoty każdego wydatku, bądź dochodu może 
 
 ### Technologie i narzędzia:
 
-- React.js with Hooks
+- React.js with Hooks (useRef, useState, useEffect) and Create React App
 - React Calendar
 - React-Chartsjs-2
 - Firebase

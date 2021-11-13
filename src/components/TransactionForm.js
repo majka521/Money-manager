@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign, faCalendarAlt, faPen, faChevronDown, faChevronUp, faTimes, faThumbtack } from "@fortawesome/free-solid-svg-icons";
@@ -77,9 +77,9 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
     e.preventDefault();
     setCategory(selectedCategory);
     setCategoryTitle(selectedTitle);
-    setShowCategoryList((state) => !state);
+    setShowCategoryList(false);
     setChevronFirst(faChevronDown);
-    setAddClassOnClickCategory((state) => !state);
+    setAddClassOnClickCategory(false);
   };
 
   //Show calendar button
@@ -99,7 +99,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
     setDate(date);
     setShowCalendar(false);
     setChevronSecond(faChevronDown);
-    setAddClassOnClickDate((state) => !state);
+    setAddClassOnClickDate(false);
   };
 
   //AddTransaction button validation
@@ -206,6 +206,44 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
     }
   };
 
+  //Function that disable category list if you click outside of it
+  function useOutsideCategoryList(ref) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setAddClassOnClickCategory(false);
+          setShowCategoryList(false);
+          setChevronFirst(faChevronDown);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+  const wrapperRefCategoryList = useRef(null);
+  useOutsideCategoryList(wrapperRefCategoryList);
+
+  //Function that disable calendar if you click outside of it
+  function useOutsideCalendar(ref) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setAddClassOnClickDate(false);
+          setShowCalendar(false);
+          setChevronSecond(faChevronDown);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+  const wrapperRefCalendar = useRef(null);
+  useOutsideCalendar(wrapperRefCalendar);
+
   return (
     <section className="newTransaction section container">
       <button className="btn btn-exit" onClick={handleExitTransaction}>
@@ -216,24 +254,25 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
           <p className="newTransaction__description">
             <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> {chooseOrEdit} kategorię:
           </p>
-          <button className={`${nameOfClassOnClickCategory} btn btn-category`} onClick={handleShowCategoryList}>
-            <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
-          </button>
-
-          {showCategoryList === true && (
-            <ul className="newTransaction__categoryList">
-              {categories.map((cat) => {
-                return (
-                  <li key={cat.category}>
-                    <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title)}>
-                      <FontAwesomeIcon icon={cat.icon} className="newTransaction__categoryList__icon" style={{ color: cat.color }} />
-                      {cat.title}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+          <div ref={wrapperRefCategoryList}>
+            <button className={`${nameOfClassOnClickCategory} btn btn-category`} onClick={handleShowCategoryList}>
+              <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
+            </button>
+            {showCategoryList === true && (
+              <ul className="newTransaction__categoryList">
+                {categories.map((cat) => {
+                  return (
+                    <li key={cat.category}>
+                      <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title)}>
+                        <FontAwesomeIcon icon={cat.icon} className="newTransaction__categoryList__icon" style={{ color: cat.color }} />
+                        {cat.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
         </div>
         <div>
           <p className="newTransaction__description">
@@ -247,14 +286,16 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
           <p className="newTransaction__description">
             <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> {chooseOrEdit} datę:
           </p>
-          <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
-            {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
-          </button>
-          {showCalendar === true && (
-            <div className="calendar">
-              <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} />
-            </div>
-          )}
+          <div ref={wrapperRefCalendar}>
+            <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
+              {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
+            </button>
+            {showCalendar === true && (
+              <div className="calendar">
+                <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} />
+              </div>
+            )}
+          </div>
         </div>
 
         <div>

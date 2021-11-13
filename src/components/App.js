@@ -50,6 +50,7 @@ export const App = () => {
 
       {statisticMode !== false && (
         <SingleStatistic
+          statisticMode={statisticMode}
           setStatisticMode={setStatisticMode}
           singleStatistic={singleStatistic}
           activeCategory={activeCategory}
@@ -64,8 +65,3 @@ export const App = () => {
     </>
   );
 };
-
-//żeby singleStatistics nie były klikalne
-//Nowa kategoria - kliknięcie poza listę kategorii czy kalendarz ma chować liste kategorii czy kalendarz
-//niedziela w kalendarzu
-//logowanie

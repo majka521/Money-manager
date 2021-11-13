@@ -80,6 +80,7 @@ export const Transactions = ({
                 dataCost={data.cost}
                 dataDescription={data.description}
                 data={data}
+                statisticMode={false}
                 setActiveCategory={setActiveCategory}
                 editModeID={editMode.id}
                 setEditMode={setEditMode}

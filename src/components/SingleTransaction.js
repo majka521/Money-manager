@@ -2,11 +2,26 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
-export const SingleTransaction = ({ dataID, dataCategory, dataCategoryTitle, dataCost, dataDescription, data, setActiveCategory, editModeID, setEditMode, setActiveCategorySum, sum }) => {
+export const SingleTransaction = ({
+  dataID,
+  dataCategory,
+  dataCategoryTitle,
+  dataCost,
+  dataDescription,
+  data,
+  statisticMode,
+  setActiveCategory,
+  editModeID,
+  setEditMode,
+  setActiveCategorySum,
+  sum,
+}) => {
   // Edit transaction button
   const handleEditTransaction = (e, data) => {
     e.preventDefault();
-    setEditMode(data);
+    if (statisticMode === false) {
+      setEditMode(data);
+    }
   };
   // Set SingleStatistic currently title and sum
   useEffect(() => {
@@ -16,7 +31,7 @@ export const SingleTransaction = ({ dataID, dataCategory, dataCategoryTitle, dat
 
   return (
     <li className={`history__li ${editModeID === dataID ? "history__editing" : ""}`}>
-      <a href="/" className={`history__singleTransaction`} onClick={(e) => handleEditTransaction(e, data)}>
+      <a href="/" className={`history__singleTransaction ${statisticMode !== false ? "history__disabled" : ""}`} onClick={(e) => handleEditTransaction(e, data)}>
         <div className="history__singleTransaction__group">
           <FontAwesomeIcon icon={getIcon(dataCategory)} className="history__singleTransaction__icon" style={{ color: getColor(dataCategory) }} />
           <div>

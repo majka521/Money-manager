@@ -2,7 +2,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { SingleTransaction } from "./SingleTransaction";
 
-export const SingleStatistic = ({ setStatisticMode, singleStatistic, activeCategory, setActiveCategory, activeCategorySum, setActiveCategorySum, currentlyDateStart, currentlyDateEnd }) => {
+export const SingleStatistic = ({
+  statisticMode,
+  setStatisticMode,
+  singleStatistic,
+  activeCategory,
+  setActiveCategory,
+  activeCategorySum,
+  setActiveCategorySum,
+  currentlyDateStart,
+  currentlyDateEnd,
+}) => {
   //Sum of currently transactions group
   let sum = 0;
   //Exit button
@@ -38,6 +48,7 @@ export const SingleStatistic = ({ setStatisticMode, singleStatistic, activeCateg
               dataCost={el.cost}
               dataDescription={el.description}
               data={el}
+              statisticMode={statisticMode}
               setActiveCategory={setActiveCategory}
               setActiveCategorySum={setActiveCategorySum}
               sum={sum}
