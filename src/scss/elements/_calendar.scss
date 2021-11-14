@@ -19,13 +19,25 @@
       background-color: $color-pink-pastel-lighter;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
+      margin-bottom: 8px;
 
-      &__arrow.react-calendar__navigation {
-        &__next2-button {
-          border-top-right-radius: 10px;
+      &__arrow:first-child {
+        border-top-left-radius: 10px;
+      }
+      &__arrow:last-child {
+        border-top-right-radius: 10px;
+      }
+
+      button {
+        min-width: 30px;
+        &[disabled] {
+          background-color: $color-pink-pastel-lighter;
         }
-        &__arrow.react-calendar__navigation__prev2-button {
-          border-top-left-radius: 10px;
+      }
+      button:enabled {
+        &:hover,
+        &:focus {
+          background-color: $color-gray-light;
         }
       }
     }
@@ -44,19 +56,10 @@
           }
         }
       }
-    }
-    &__navigation {
-      button {
-        min-width: 30px;
-      }
-      button:enabled {
-        &:hover,
-        &:focus {
-          background-color: $color-gray-light;
-        }
+      &__weekdays__weekday abbr {
+        font-size: 0.85rem;
       }
     }
-
     &__tile {
       padding: 0.5em;
 
@@ -68,8 +71,23 @@
         border-radius: 50%;
       }
 
-      &:enabled:hover {
+      &:hover {
         background-color: $color-gray-light;
+        &.react-calendar__year-view__months__month:last-child {
+          border-bottom-right-radius: 10px;
+        }
+        &.react-calendar__year-view__months__month:nth-last-child(3),
+        &.react-calendar__decade-view__years__year:last-child,
+        &.react-calendar__century-view__decades__decade:last-child {
+          border-bottom-left-radius: 10px;
+        }
+      }
+      &--hasActive {
+        background: none;
+      }
+
+      &.react-calendar__year-view__months__month abbr {
+        font-size: 1.2rem;
       }
     }
 
