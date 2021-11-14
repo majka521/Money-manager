@@ -21,23 +21,26 @@
       border-top-right-radius: 10px;
       margin-bottom: 8px;
 
-      &__arrow:first-child {
-        border-top-left-radius: 10px;
-      }
-      &__arrow:last-child {
-        border-top-right-radius: 10px;
+      &__arrow {
+        &:first-child {
+          border-top-left-radius: 10px;
+        }
+        &:last-child {
+          border-top-right-radius: 10px;
+        }
       }
 
       button {
         min-width: 30px;
+
         &[disabled] {
           background-color: $color-pink-pastel-lighter;
         }
-      }
-      button:enabled {
-        &:hover,
-        &:focus {
-          background-color: $color-gray-light;
+        &:enabled {
+          &:hover,
+          &:focus {
+            background-color: $color-gray-light;
+          }
         }
       }
     }
@@ -59,6 +62,14 @@
       &__weekdays__weekday abbr {
         font-size: 0.85rem;
       }
+      &__days__day {
+        &--weekend abbr {
+          color: $color-red-strong;
+        }
+        &--neighboringMonth abbr {
+          color: $color-gray-strong;
+        }
+      }
     }
     &__tile {
       padding: 0.5em;
@@ -70,7 +81,6 @@
         background-color: $color-pink-pastel-lighter;
         border-radius: 50%;
       }
-
       &:hover {
         background-color: $color-gray-light;
         &.react-calendar__year-view__months__month:last-child {
@@ -81,22 +91,22 @@
         &.react-calendar__century-view__decades__decade:last-child {
           border-bottom-left-radius: 10px;
         }
+
+        &[disabled] {
+          background: #f0f0f0;
+        }
       }
       &--hasActive {
         background: none;
       }
 
-      &.react-calendar__year-view__months__month abbr {
-        font-size: 1.2rem;
-      }
-    }
-
-    &__month-view__days__day {
-      &--weekend abbr {
-        color: $color-red-strong;
-      }
-      &--neighboringMonth abbr {
-        color: $color-gray-strong;
+      &.react-calendar {
+        &__year-view__months__month abbr {
+          font-size: 1.2rem;
+        }
+        &__century-view__decades__decade:disabled:last-child {
+          border-bottom-left-radius: 10px;
+        }
       }
     }
   }

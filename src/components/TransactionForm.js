@@ -292,7 +292,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
             </button>
             {showCalendar === true && (
               <div className="calendar">
-                <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} />
+                <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} minDate={new Date(2011, 0, 1)} maxDate={new Date(2030, 11, 31)} />
               </div>
             )}
           </div>
