@@ -35,6 +35,7 @@
 
         &[disabled] {
           background-color: $color-pink-pastel-lighter;
+          color: $color-gray-light;
         }
         &:enabled {
           &:hover,

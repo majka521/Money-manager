@@ -17,3 +17,5 @@ Użytkownik wprowadzając ręcznie kwoty każdego wydatku, bądź dochodu może 
 - Firebase
 - SASS
 - Fontawesome
+
+-npm install firebaseui --save

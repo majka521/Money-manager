@@ -3,11 +3,6 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/firestore";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAwnsyt-d5FiogW34slNs0lIUzDmxC884M",
   authDomain: "money-manager-12daf.firebaseapp.com",
@@ -21,6 +16,12 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+// Initialize the FirebaseUI Widget using Firebase.
+// var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+// var firebase = require('firebase');
+// var firebaseui = require('firebaseui');
 
 const db = firebase.firestore();
 

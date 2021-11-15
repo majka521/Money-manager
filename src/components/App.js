@@ -5,6 +5,7 @@ import { Statistics } from "./Statistics";
 import { TransactionForm } from "./TransactionForm";
 import { SingleStatistic } from "./SingleStatistic";
 import { Footer } from "./Footer";
+import { HomeScreen } from "./HomeScreen";
 
 export const App = () => {
   const [database, setDatabase] = useState([]); //currently database
@@ -19,6 +20,7 @@ export const App = () => {
 
   return (
     <>
+      <HomeScreen />
       <Header />
       {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
 
