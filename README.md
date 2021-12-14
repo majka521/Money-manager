@@ -1,16 +1,17 @@
-# Money menager
+# Money manager
 
-> STATUS: W REALIZACJI
-> W planach: panal logowania, responsywność, dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
+> STATUS: W REALIZACJI. W planach: responsive design, Firebase authentication (signup, login, forget password, reset password), dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
 
 ## Description
 
 Money menager is my own final project for CodersLab JavaScript Developer bootcamp.
 
-**Money Menager** to intuicyjna aplikacja do kontrolowanie domowego budżetu.
+**Money Manager** to intuicyjna aplikacja do kontrolowanie domowego budżetu.
 Użytkownik wprowadzając kwoty każdego wydatku może przyjeżeć się swojemu budżetowi, a dzięki statystykom trzymać kontrolę nad osobistymi, bądź rodzinnymi finansami. Aplikacja umożliwia zarządzanie pieniędzmi dając szybki wgląd w saldo wydatków oraz statystyki prezentowane za pomocą wykresu kołowego.
 
 You can see the page **[here](https://money-manager-12daf.web.app/)**.
+
+![Money Manager main page](/screenshots/Money Menager.png)
 
 ## Technologies and tools
 
@@ -32,7 +33,11 @@ This project was created using the following technologies:
 ![Font Awesome icon by Icons8](https://img.icons8.com/windows/48/4a90e2/font-awesome.png)
 ![Webpack icon by Icons8](https://img.icons8.com/color/48/000000/webpack.png)
 
-## Screenshot
+## Screenshots
+
+- Panel dodawania wydatku. Dodając wydatek użytkownik musi określić kategorię, podać kwotę i datę, a także opcjonalnie notatkę.
+- Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować.
+- W sekcji "Statystyki" wszystkie transakcje zebrane są w grupy z tych samych kategorii, posortowane od największego wydatku, a także stworzony na ich podstawie wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć wszystkie transakcje danej kategorii.
 
 ![furry](link)
 
@@ -42,4 +47,4 @@ icons form [icons8](https://icons8.com/)
 
 -npm install firebaseui --save
 
-Dodając wydatek użytkownik musi określić kategorię, podać kwotę i datę, a także opcjonalnie notatkę. Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować. Obok znajduje się sekcja "Statystyki", w której zostają zebrane, pogrupowane i podliczone transakcje z tych samych kategorii, a także stworzony na ich podstawie wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć szczegółowo z
+Obok znajduje się sekcja "Statystyki", w której zostają zebrane, pogrupowane i podliczone transakcje z tych samych kategorii, a także stworzony na ich podstawie wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć szczegółowo z
