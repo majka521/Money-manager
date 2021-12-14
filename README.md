@@ -25,11 +25,11 @@ This project was created using the following technologies:
 - Fontawesome
 - WebPack
 
-![JavaScript icon by Icons8](https://img.icons8.com/color/50/000000/javascript--v2.png)
+![JavaScript icon by Icons8](https://img.icons8.com/color/48/000000/javascript--v2.png)
 ![React icon by Icons8](https://img.icons8.com/color/48/000000/react-native.png)
-![Google Firebase icon by Icons8](https://icons8.com/icon/87330/google-firebase-console)
-![Sass icon by Icons8](https://img.icons8.com/color/50/000000/sass.png)
-![Font Awesome icon by Icons8](https://img.icons8.com/windows/64/4a90e2/font-awesome-squared.png)
+![Google Firebase icon by Icons8](https://img.icons8.com/color/48/000000/firebase.png)
+![Sass icon by Icons8](https://img.icons8.com/color/48/000000/sass.png)
+![Font Awesome icon by Icons8](https://img.icons8.com/windows/48/4a90e2/font-awesome.png)
 ![Webpack icon by Icons8](https://img.icons8.com/color/48/000000/webpack.png)
 
 ## Screenshot
