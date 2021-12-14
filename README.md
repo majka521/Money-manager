@@ -1,6 +1,6 @@
 # Money manager
 
-> STATUS: W REALIZACJI. W planach: responsive design, Firebase authentication (signup, login, forget password, reset password), dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
+> STATUS: **W REALIZACJI**. W planach: responsive design, Firebase authentication (signup, login, forget password, reset password), dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
 
 ## ![Description icon by Icons8](https://img.icons8.com/dusk/24/000000/document--v1.png) Description
 
@@ -33,18 +33,21 @@ This project was created using the following technologies:
 ![Font Awesome icon by Icons8](https://img.icons8.com/windows/48/4a90e2/font-awesome.png)
 ![Webpack icon by Icons8](https://img.icons8.com/color/48/000000/webpack.png)
 
-## ![Photo icon by Icons8](https://img.icons8.com/dusk/24/000000/unsplash.png) Screenshots
+## ![Screenshot icon by Icons8](https://img.icons8.com/dusk/24/000000/unsplash.png) Screenshots
 
-- Panel dodawania wydatku. Dodając wydatek użytkownik musi określić kategorię, podać kwotę i datę, a także opcjonalnie notatkę.
-- Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować.
-- W sekcji "Statystyki" wszystkie transakcje zebrane są w grupy z tych samych kategorii, posortowane od największego wydatku, a także stworzony na ich podstawie wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć wszystkie transakcje danej kategorii.
+- Panel dodawania wydatku. Dodając wydatek użytkownik wybiera jedną z szesnastu kategorii, wpisuje kwotę i datę, a także opcjonalnie notatkę.
+  ![](/screenshots/money-manager-1.gif)
 
-![furry](link)
+- Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować lub usunąć.
+  ![](/screenshots/money-manager-2.gif)
+
+- W sekcji "Statystyki" wszystkie transakcje są pogrupowane kategoriami oraz posortowane od największego wydatku. Na ich podstawie tworzony jest wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć wszystkie transakcje danej kategorii.
+  ![](/screenshots/money-manager-3.gif)
+
+## ![Install icon by Icons8](https://img.icons8.com/dusk/24/000000/software-installer.png") How to install
+
+-npm install firebaseui --save
 
 ---
 
 icons form [icons8](https://icons8.com/)
-
--npm install firebaseui --save
-
-Obok znajduje się sekcja "Statystyki", w której zostają zebrane, pogrupowane i podliczone transakcje z tych samych kategorii, a także stworzony na ich podstawie wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć szczegółowo z
