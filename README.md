@@ -45,17 +45,6 @@ This project was created using the following technologies:
 - In the 'statistics' section all transactions are grouped by categories and sorted from the largest expense. Based on these is created a donut chart. By clicking on a group in this section user can see all transactions of that category.
   ![](/screenshots/money-manager-3.gif)
 
-## ![Install icon by Icons8](https://img.icons8.com/dusk/24/000000/software-installer.png) How to install
-
-1. git clone https://github.com/BeanMellow/shop-admin-panel
-2. cd shop-admin-panel
-3. npm i
-   Then npm start for development mode, and npm run build for production.
-
-In development mode, localhost server will run on localhost:8080 with autoreloading.
-
--npm install firebaseui --save
-
 ---
 
 icons form [icons8](https://icons8.com/)
