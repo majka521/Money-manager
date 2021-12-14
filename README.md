@@ -44,7 +44,7 @@ This project was created using the following technologies:
 - W sekcji "Statystyki" wszystkie transakcje są pogrupowane kategoriami oraz posortowane od największego wydatku. Na ich podstawie tworzony jest wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć wszystkie transakcje danej kategorii.
   ![](/screenshots/money-manager-3.gif)
 
-## ![Install icon by Icons8](https://img.icons8.com/dusk/24/000000/software-installer.png") How to install
+## ![Install icon by Icons8](https://img.icons8.com/dusk/24/000000/software-installer.png) How to install
 
 -npm install firebaseui --save
 
