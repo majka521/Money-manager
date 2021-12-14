@@ -4,14 +4,14 @@
 
 ## Description
 
-Money menager is my own final project for CodersLab JavaScript Developer bootcamp.
+Money manager is my own final project for CodersLab JavaScript Developer bootcamp.
 
 **Money Manager** to intuicyjna aplikacja do kontrolowanie domowego budżetu.
 Użytkownik wprowadzając kwoty każdego wydatku może przyjeżeć się swojemu budżetowi, a dzięki statystykom trzymać kontrolę nad osobistymi, bądź rodzinnymi finansami. Aplikacja umożliwia zarządzanie pieniędzmi dając szybki wgląd w saldo wydatków oraz statystyki prezentowane za pomocą wykresu kołowego.
 
 You can see the page **[here](https://money-manager-12daf.web.app/)**.
 
-![Money Manager main page](/screenshots/Money Menager.png)
+![Money Manager main page](/screenshots/Money-Manager.png)
 
 ## Technologies and tools
 
