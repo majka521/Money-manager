@@ -1,13 +1,14 @@
 # Money manager
 
-> STATUS: **W REALIZACJI**. W planach: responsive design, Firebase authentication (signup, login, forget password, reset password), dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
+> STATUS: **IN PROGRESS**
+
+> In plans: responsive design, Firebase authentication (sign up, login, forget and reset password), select period per week, month, or year, income, account balance, select account currency, create a new category.
 
 ## ![Description icon by Icons8](https://img.icons8.com/dusk/24/000000/document--v1.png) Description
 
 Money manager is my own final project for CodersLab JavaScript Developer bootcamp.
 
-**Money Manager** to intuicyjna aplikacja do kontrolowanie domowego budżetu.
-Użytkownik wprowadzając kwoty każdego wydatku może przyjeżeć się swojemu budżetowi, a dzięki statystykom trzymać kontrolę nad osobistymi, bądź rodzinnymi finansami. Aplikacja umożliwia zarządzanie pieniędzmi dając szybki wgląd w saldo wydatków oraz statystyki prezentowane za pomocą wykresu kołowego.
+**Money Manager** is intuitive application to control home budget. User can manage his budget by regularly entering his expenses and the statistics allow them to keep control over their personal or family finances.
 
 You can see the page **[here](https://money-manager-12daf.web.app/)**.
 
@@ -35,16 +36,23 @@ This project was created using the following technologies:
 
 ## ![Screenshot icon by Icons8](https://img.icons8.com/dusk/24/000000/unsplash.png) Screenshots
 
-- Panel dodawania wydatku. Dodając wydatek użytkownik wybiera jedną z szesnastu kategorii, wpisuje kwotę i datę, a także opcjonalnie notatkę.
+- Adding an expense - user can add an expense by selecting one of sixteen categories, enters the amount, date, and optionally a note.
   ![](/screenshots/money-manager-1.gif)
 
-- Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować lub usunąć.
+- All added expenses are collected in the 'transactions' section. User can click on a selected transaction and easily edit or delete it.
   ![](/screenshots/money-manager-2.gif)
 
-- W sekcji "Statystyki" wszystkie transakcje są pogrupowane kategoriami oraz posortowane od największego wydatku. Na ich podstawie tworzony jest wykres kołowy. Klikając na grupę w tej sekcji można zobaczyć wszystkie transakcje danej kategorii.
+- In the 'statistics' section all transactions are grouped by categories and sorted from the largest expense. Based on these is created a donut chart. By clicking on a group in this section user can see all transactions of that category.
   ![](/screenshots/money-manager-3.gif)
 
 ## ![Install icon by Icons8](https://img.icons8.com/dusk/24/000000/software-installer.png) How to install
+
+1. git clone https://github.com/BeanMellow/shop-admin-panel
+2. cd shop-admin-panel
+3. npm i
+   Then npm start for development mode, and npm run build for production.
+
+In development mode, localhost server will run on localhost:8080 with autoreloading.
 
 -npm install firebaseui --save
 
