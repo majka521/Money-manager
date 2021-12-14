@@ -2,7 +2,7 @@
 
 > STATUS: W REALIZACJI. W planach: responsive design, Firebase authentication (signup, login, forget password, reset password), dochody, wybór okresu czasu na tydzień, miesiąc, lub rok, saldo
 
-## Description
+## ![Description icon by Icons8](https://img.icons8.com/dusk/64/000000/document--v1.png) Description
 
 Money manager is my own final project for CodersLab JavaScript Developer bootcamp.
 
