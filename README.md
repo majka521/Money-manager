@@ -33,7 +33,7 @@ This project was created using the following technologies:
 ![Font Awesome icon by Icons8](https://img.icons8.com/windows/48/4a90e2/font-awesome.png)
 ![Webpack icon by Icons8](https://img.icons8.com/color/48/000000/webpack.png)
 
-## ![Photo icon by Icons8](https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/24/000000/external-cropping-photography-icongeek26-linear-colour-icongeek26.png) Screenshots
+## ![Photo icon by Icons8](https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/30/000000/external-cropping-photography-icongeek26-linear-colour-icongeek26.png) Screenshots
 
 - Panel dodawania wydatku. Dodając wydatek użytkownik musi określić kategorię, podać kwotę i datę, a także opcjonalnie notatkę.
 - Wszystkie wprowadzone wydatki zebrane są w sekcji "Transakcje". Klikając na wybraną transakcję można w łatwością ją edytować.
