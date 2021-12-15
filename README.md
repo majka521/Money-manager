@@ -2,7 +2,7 @@
 
 > STATUS: **IN PROGRESS**
 
-> In plans: responsive design, Firebase authentication (sign up, login, forget and reset password), select period per week, month, or year, income, account balance, select account currency, create a new category.
+> In future: responsive design, Firebase authentication (sign up, login, forget and reset password), select period per week, month, or year, income, account balance, select account currency, create your own category.
 
 ## ![Description icon by Icons8](https://img.icons8.com/dusk/24/000000/document--v1.png) Description
 
