@@ -5,7 +5,6 @@ import { Statistics } from "./Statistics";
 import { TransactionForm } from "./TransactionForm";
 import { SingleStatistic } from "./SingleStatistic";
 import { Footer } from "./Footer";
-import { HomeScreen } from "./HomeScreen";
 
 export const App = () => {
   const [database, setDatabase] = useState([]); //currently database
@@ -20,49 +19,50 @@ export const App = () => {
 
   return (
     <>
-      <HomeScreen />
-      <Header />
-      {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
+      <div className="main__wrapper">
+        <Header />
+        {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
 
-      {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
+        {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
 
-      <main className="mainSection container">
-        <Transactions
-          database={database}
-          setDatabase={setDatabase}
-          setNewTransactionMode={setNewTransactionMode}
-          editMode={editMode}
-          setEditMode={setEditMode}
-          setActiveCategory={setActiveCategory}
-          setActiveCategorySum={setActiveCategorySum}
-          currentlyDateStart={currentlyDateStart}
-          setCurrentlyDateStart={setCurrentlyDateStart}
-          currentlyDateEnd={currentlyDateEnd}
-          setCurrentlyDateEnd={setCurrentlyDateEnd}
-        />
-        <Statistics
-          database={database}
-          statisticMode={statisticMode}
-          setStatisticMode={setStatisticMode}
-          setSingleStatistic={setSingleStatistic}
-          currentlyDateStart={currentlyDateStart}
-          currentlyDateEnd={currentlyDateEnd}
-        />
-      </main>
+        <main className="mainSection container">
+          <Transactions
+            database={database}
+            setDatabase={setDatabase}
+            setNewTransactionMode={setNewTransactionMode}
+            editMode={editMode}
+            setEditMode={setEditMode}
+            setActiveCategory={setActiveCategory}
+            setActiveCategorySum={setActiveCategorySum}
+            currentlyDateStart={currentlyDateStart}
+            setCurrentlyDateStart={setCurrentlyDateStart}
+            currentlyDateEnd={currentlyDateEnd}
+            setCurrentlyDateEnd={setCurrentlyDateEnd}
+          />
+          <Statistics
+            database={database}
+            statisticMode={statisticMode}
+            setStatisticMode={setStatisticMode}
+            setSingleStatistic={setSingleStatistic}
+            currentlyDateStart={currentlyDateStart}
+            currentlyDateEnd={currentlyDateEnd}
+          />
+        </main>
 
-      {statisticMode !== false && (
-        <SingleStatistic
-          statisticMode={statisticMode}
-          setStatisticMode={setStatisticMode}
-          singleStatistic={singleStatistic}
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-          activeCategorySum={activeCategorySum}
-          setActiveCategorySum={setActiveCategorySum}
-          currentlyDateStart={currentlyDateStart}
-          currentlyDateEnd={currentlyDateEnd}
-        />
-      )}
+        {statisticMode !== false && (
+          <SingleStatistic
+            statisticMode={statisticMode}
+            setStatisticMode={setStatisticMode}
+            singleStatistic={singleStatistic}
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            activeCategorySum={activeCategorySum}
+            setActiveCategorySum={setActiveCategorySum}
+            currentlyDateStart={currentlyDateStart}
+            currentlyDateEnd={currentlyDateEnd}
+          />
+        )}
+      </div>
       <Footer />
     </>
   );
