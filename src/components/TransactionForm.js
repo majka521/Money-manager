@@ -250,70 +250,75 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
         <FontAwesomeIcon icon={faTimes} />
       </button>
       <form className="newTransaction__form">
-        <div>
-          <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> {chooseOrEdit} kategorię:
-          </p>
-          <div ref={wrapperRefCategoryList}>
-            <button className={`${nameOfClassOnClickCategory} btn btn-category`} onClick={handleShowCategoryList}>
-              <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
-            </button>
-            {showCategoryList === true && (
-              <ul className="newTransaction__categoryList">
-                {categories.map((cat) => {
-                  return (
-                    <li key={cat.category}>
-                      <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title)}>
-                        <FontAwesomeIcon icon={cat.icon} className="newTransaction__categoryList__icon" style={{ color: cat.color }} />
-                        {cat.title}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+        <div className="newTransaction__form__inputs">
+          <div className="newTransaction__form__inputs__box">
+            <p className="newTransaction__description">
+              <FontAwesomeIcon icon={faThumbtack} className="newTransaction__icon" /> {chooseOrEdit} kategorię:
+            </p>
+            <div ref={wrapperRefCategoryList} className="newTransaction__form--relativeBox">
+              <button className={`${nameOfClassOnClickCategory} btn btn-category btn-category-list`} onClick={handleShowCategoryList}>
+                <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
+              </button>
+              {showCategoryList === true && (
+                <ul className="newTransaction__categoryList">
+                  {categories.map((cat) => {
+                    return (
+                      <li key={cat.category}>
+                        <a href="/" onClick={(e) => handleChooseCategory(e, cat.category, cat.title)}>
+                          <FontAwesomeIcon icon={cat.icon} className="newTransaction__categoryList__icon" style={{ color: cat.color }} />
+                          {cat.title}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
-        <div>
-          <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> {typeOrEdit} kwotę:
-          </p>
-          <div className="newTransaction__label newTransaction__label__input">
-            <input type="number" placeholder={"0 zł"} name="cost" value={cost} step="0.01" onChange={(e) => setCost(e.target.value)} />
+          <div className="newTransaction__form__inputs__box">
+            <p className="newTransaction__description">
+              <FontAwesomeIcon icon={faDollarSign} className="newTransaction__icon" /> {typeOrEdit} kwotę:
+            </p>
+            <div className="newTransaction__label newTransaction__label__input">
+              <input type="number" placeholder={"0 zł"} name="cost" value={cost} step="0.01" onChange={(e) => setCost(e.target.value)} />
+            </div>
           </div>
-        </div>
-        <div>
-          <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> {chooseOrEdit} datę:
-          </p>
-          <div ref={wrapperRefCalendar}>
-            <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
-              {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
-            </button>
-            {showCalendar === true && (
-              <div className="calendar">
-                <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} minDate={new Date(2011, 0, 1)} maxDate={new Date(2030, 11, 31)} />
-              </div>
-            )}
+          <div className="newTransaction__form__inputs__box">
+            <p className="newTransaction__description">
+              <FontAwesomeIcon icon={faCalendarAlt} className="newTransaction__icon" /> {chooseOrEdit} datę:
+            </p>
+            <div ref={wrapperRefCalendar} className="newTransaction__form--relativeBox">
+              <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
+                {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
+              </button>
+              {showCalendar === true && (
+                <div className="calendar">
+                  <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} minDate={new Date(2011, 0, 1)} maxDate={new Date(2030, 11, 31)} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="newTransaction__form__inputs__box">
+            <p className="newTransaction__description">
+              <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> {typeOrEditNote}:
+            </p>
+            <div className="newTransaction__label newTransaction__label__input">
+              <textarea maxLength="28" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
           </div>
         </div>
 
-        <div>
-          <p className="newTransaction__description">
-            <FontAwesomeIcon icon={faPen} className="newTransaction__icon" /> {typeOrEditNote}:
-          </p>
-          <div className="newTransaction__label newTransaction__label__input">
-            <textarea maxLength="28" type="text" placeholder="miejsce na notatkę" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-          </div>
-        </div>
-        <button disabled={disabledAddTransaction} onClick={handleAddTransaction} className={`${nameOfClassAddTransaction} btn`}>
-          {addOrEditButton}
-        </button>
-        {editMode !== false && (
-          <button className="btn btn-delete" onClick={handleDeleteTransaction}>
-            Usuń
+        <div className="newTransaction__buttons">
+          <button disabled={disabledAddTransaction} onClick={handleAddTransaction} className={`${nameOfClassAddTransaction} btn`}>
+            {addOrEditButton}
           </button>
-        )}
+          {editMode !== false && (
+            <button className="btn btn-delete" onClick={handleDeleteTransaction}>
+              Usuń
+            </button>
+          )}
+        </div>
       </form>
     </section>
   );

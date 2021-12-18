@@ -1,9 +1,7 @@
 @import "react-calendar/dist/Calendar.css";
 
 .calendar {
-  position: absolute;
-  z-index: 1;
-  font-size: 1.4rem;
+  width: 100%;
 
   abbr {
     color: $color-text;
@@ -11,7 +9,9 @@
   }
 
   .react-calendar {
-    width: 220px;
+    position: absolute;
+    z-index: 1;
+    font-size: 1.4rem;
     border: 1px solid $color-text;
     border-radius: 10px;
 
@@ -49,15 +49,9 @@
       &__days > button {
         &:last-child {
           border-bottom-right-radius: 10px;
-          &.react-calendar__tile--active {
-            border-radius: 50%;
-          }
         }
         &:nth-last-child(7) {
           border-bottom-left-radius: 10px;
-          &.react-calendar__tile--active {
-            border-radius: 50%;
-          }
         }
       }
       &__weekdays__weekday abbr {
@@ -80,7 +74,6 @@
       }
       &--active {
         background-color: $color-pink-pastel-lighter;
-        border-radius: 50%;
       }
       &:hover {
         background-color: $color-gray-light;

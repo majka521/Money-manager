@@ -5,7 +5,21 @@
 
   &__form {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+
+    &__inputs {
+      display: flex;
+      justify-content: space-between;
+      width: 85%;
+
+      &__box {
+        width: 23%;
+      }
+    }
+
+    &--relativeBox {
+      position: relative;
+    }
   }
   &__description {
     font-size: 1.3rem;
@@ -26,7 +40,7 @@
     background-color: $color-light;
     z-index: 1;
     border: 1px solid $color-text;
-    width: 220px;
+    width: 100%;
     border-radius: 10px;
     :hover {
       background-color: $color-gray-lighter;
@@ -54,7 +68,6 @@
 
   &__label {
     border: 1px solid $color-text;
-    width: 220px;
     height: 41px;
     border-radius: 10px;
     padding: 5px 10px;
@@ -79,5 +92,12 @@
     width: 100%;
     resize: none;
     border: none;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 5px;
+    margin: 0 0 5px 15px;
   }
 }

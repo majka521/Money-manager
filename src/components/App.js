@@ -19,8 +19,8 @@ export const App = () => {
 
   return (
     <>
+      <Header />
       <div className="main__wrapper">
-        <Header />
         {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
 
         {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
