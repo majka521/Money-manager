@@ -14,11 +14,13 @@ export const SingleStatistic = ({
   currentlyDateEnd,
 }) => {
   //Sum of currently transactions group
-  let sum = 0;
+  console.log('!!!', singleStatistic);
+  //let sum = 0;
   //Exit button
   const handleExitTransaction = () => {
     setStatisticMode(false);
   };
+  const sum = singleStatistic.reduce((sum, el) => sum + parseFloat(el.cost), 0);
   return (
     <section className="newTransaction section container singleStatistic">
       <div className="section__header">
@@ -38,7 +40,6 @@ export const SingleStatistic = ({
 
       <ul>
         {singleStatistic.map((el) => {
-          sum += parseFloat(el.cost);
           return (
             <SingleTransaction
               key={el.id}
@@ -59,3 +60,29 @@ export const SingleStatistic = ({
     </section>
   );
 };
+
+
+// function sumClear (a,b) {
+//   return a + b;
+// }
+
+// const wynik = sumClear(2,2);
+
+// let b = 2;
+// function sumB(a) {
+//   // pobierz c 
+//   let c;
+//   return b + a + c;
+// }
+
+// sumB(2)
+
+const tablica = [1, 2, 3];
+
+const nowaTablica = tablica.map(el => el*el);
+
+
+let wszystkieWyniki = []
+tablica.forEach(el => {
+  
+})

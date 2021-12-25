@@ -27,6 +27,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
   const [addClassOnClickDate, setAddClassOnClickDate] = useState(false);
   const [nameOfClassOnClickDate, setNameOfClassOnClickDate] = useState("");
   useEffect(() => {
+  
     if (addClassOnClickCategory === true) {
       setNameOfClassOnClickCategory("selectedCategory");
     } else {
@@ -34,6 +35,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
     }
   }, [addClassOnClickCategory]);
   useEffect(() => {
+    // if (addClassOnClickDate)
     if (addClassOnClickDate === true) {
       setNameOfClassOnClickDate("selectedDate");
     } else {

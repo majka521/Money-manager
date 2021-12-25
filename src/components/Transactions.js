@@ -18,14 +18,20 @@ export const Transactions = ({
   setCurrentlyDateEnd,
 }) => {
   //Set first and last date
-  let datesArray = [];
-  database.map((data) => {
-    datesArray.push(data.date.seconds);
-    return datesArray;
-  });
+//  // let datesArray = [];
+//   database.map((data) => {
+//     datesArray.push(data.date.seconds); // timestamp?
+//     return datesArray;
+//   });
+  
+  const datesArray = database.map(data => data.date.seconds);
+
   useEffect(() => {
+    // console.log('!!!', 'use Effect');
+    // const datesArray = database.map(data => data.date.seconds);
     setCurrentlyDateEnd(new Date(datesArray[0] * 1000).toLocaleDateString());
     setCurrentlyDateStart(new Date(datesArray[datesArray.length - 1] * 1000).toLocaleDateString());
+  // }, [database,setCurrentlyDateEnd, setCurrentlyDateStart]);
   });
 
   // Firebase - ordered existing data
@@ -34,21 +40,25 @@ export const Transactions = ({
       .orderBy("date", "desc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setDatabase((state) => [
-            ...state,
-            {
-              ...doc.data(),
-              id: doc.id,
-            },
-          ]);
-        });
+        // querySnapshot.forEach((doc) => {
+        //   console.log(doc.data(), doc.id);
+        //   setDatabase((state) => [
+        //     ...state,
+        //     {
+        //       ...doc.data(),
+        //       id: doc.id,
+        //     },
+        //   ]);
+        // });
+        const queryData =  querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+        setDatabase(queryData);
       });
   }, [setDatabase]);
 
   // Add new transaction button
   const handleNewTransaction = () => {
-    setNewTransactionMode((state) => !state);
+    // nazwy zmiennych!
+    setNewTransactionMode((transactionMode) => !transactionMode);
   };
   return (
     <>
@@ -56,7 +66,9 @@ export const Transactions = ({
         <div className="section__header history__header">
           <div>
             <h2 className="section__title">Transakcje</h2>
+            {/* !database.length */}
             {database.length === 0 ? (
+              // setLoading
               <h1>Ładuję dane...</h1>
             ) : (
               <p className="section__timePeriod">

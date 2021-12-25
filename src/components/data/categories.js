@@ -36,14 +36,24 @@ export const categories = [
   { category: "other", icon: faCoins, title: "Inne", color: "#87858E" },
 ];
 
+// export const getIcon = (cat) => categories.filter((el) => {
+//     return el.category === cat;
+//   })[0].icon;
+
 export const getIcon = (cat) => {
-  return categories.filter((el) => {
+  return categories.find((el) => {
     return el.category === cat;
-  })[0].icon;
+  })?.icon;
 };
 
+// const obj = { objA: { objC : 'Hello'} };
+
+// obj && obj.objA && obj.objA.objC ? 'Hello' : 'Error';
+
+// obj?.objA?.objC ? 'Hello' : 'Error'
+
 export const getColor = (cat) => {
-  return categories.filter((el) => {
+  return categories.find((el) => {
     return el.category === cat;
-  })[0].color;
+  })?.color;
 };

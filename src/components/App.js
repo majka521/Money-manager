@@ -21,9 +21,10 @@ export const App = () => {
     <>
       <Header />
       <div className="main__wrapper">
-        {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
-
-        {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
+        {/* {newTransactionMode === true && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />} */}
+        {newTransactionMode  && <TransactionForm setDatabase={setDatabase} setNewTransactionMode={setNewTransactionMode} editMode={false} />}
+        {/* {editMode !== false && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />} */}
+        {editMode && <TransactionForm setDatabase={setDatabase} editMode={editMode} setEditMode={setEditMode} />}
 
         <main className="mainSection container">
           <Transactions
@@ -49,7 +50,7 @@ export const App = () => {
           />
         </main>
 
-        {statisticMode !== false && (
+        {statisticMode && (
           <SingleStatistic
             statisticMode={statisticMode}
             setStatisticMode={setStatisticMode}
