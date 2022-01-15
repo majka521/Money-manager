@@ -31,7 +31,7 @@ export const SingleTransaction = ({
 
   return (
     <li className={`history__li ${editModeID === dataID ? "history__editing" : ""}`}>
-      <a href="/" className={`history__singleTransaction ${statisticMode !== false ? "history__disabled" : ""}`} onClick={(e) => handleEditTransaction(e, data)}>
+      <a href="/" className={`history__singleTransaction ${statisticMode ? "history__disabled" : ""}`} onClick={(e) => handleEditTransaction(e, data)}>
         <div className="history__singleTransaction__group">
           <FontAwesomeIcon icon={getIcon(dataCategory)} className="history__singleTransaction__icon" style={{ color: getColor(dataCategory) }} />
           <div>

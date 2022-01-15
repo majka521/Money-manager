@@ -18,11 +18,8 @@ export const Transactions = ({
   setCurrentlyDateEnd,
 }) => {
   //Set first and last date
-  let datesArray = [];
-  database.map((data) => {
-    datesArray.push(data.date.seconds);
-    return datesArray;
-  });
+  const datesArray = database.map((data) => data.date.seconds);
+
   useEffect(() => {
     setCurrentlyDateEnd(new Date(datesArray[0] * 1000).toLocaleDateString());
     setCurrentlyDateStart(new Date(datesArray[datesArray.length - 1] * 1000).toLocaleDateString());
@@ -34,29 +31,21 @@ export const Transactions = ({
       .orderBy("date", "desc")
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setDatabase((state) => [
-            ...state,
-            {
-              ...doc.data(),
-              id: doc.id,
-            },
-          ]);
-        });
+        const queryData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        setDatabase(queryData);
       });
   }, [setDatabase]);
 
   // Add new transaction button
-  const handleNewTransaction = () => {
-    setNewTransactionMode((state) => !state);
-  };
+  const handleNewTransaction = () => setNewTransactionMode((newTransactionMode) => !newTransactionMode);
   return (
     <>
       <section className="history section">
         <div className="section__header history__header">
           <div>
             <h2 className="section__title">Transakcje</h2>
-            {database.length === 0 ? (
+            {!database.length ? (
+              // setLoading
               <h1>Ładuję dane...</h1>
             ) : (
               <p className="section__timePeriod">
@@ -68,7 +57,7 @@ export const Transactions = ({
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        {database.length === 0 ? <h1>Ładuję dane...</h1> : ""}
+        {!database.length ? <h1>Ładuję dane...</h1> : ""}
         <ul>
           {database.map((data) => {
             return (

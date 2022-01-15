@@ -27,14 +27,14 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
   const [addClassOnClickDate, setAddClassOnClickDate] = useState(false);
   const [nameOfClassOnClickDate, setNameOfClassOnClickDate] = useState("");
   useEffect(() => {
-    if (addClassOnClickCategory === true) {
+    if (addClassOnClickCategory) {
       setNameOfClassOnClickCategory("selectedCategory");
     } else {
       setNameOfClassOnClickCategory("");
     }
   }, [addClassOnClickCategory]);
   useEffect(() => {
-    if (addClassOnClickDate === true) {
+    if (addClassOnClickDate) {
       setNameOfClassOnClickDate("selectedDate");
     } else {
       setNameOfClassOnClickDate("");
@@ -47,7 +47,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
   const [typeOrEditNote, setTypeOrEditNote] = useState("Miejsce na notatkę");
   const [addOrEditButton, setAddOrEditButton] = useState("Dodaj");
   useEffect(() => {
-    if (editMode !== false) {
+    if (editMode) {
       setChooseOrEdit("Edytuj");
       setTypeOrEdit("Edytuj");
       setTypeOrEditNote("Edytuj notatkę");
@@ -63,8 +63,8 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
   //Show category list button
   const handleShowCategoryList = (e) => {
     e.preventDefault();
-    setShowCategoryList((state) => !state);
-    setAddClassOnClickCategory((state) => !state);
+    setShowCategoryList((showCategoryList) => !showCategoryList);
+    setAddClassOnClickCategory((addClassOnClickCategory) => !addClassOnClickCategory);
     //Up or down arrows in button
     if (chevronFirst === faChevronDown) {
       setChevronFirst(faChevronUp);
@@ -85,8 +85,8 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
   //Show calendar button
   const handleShowCalendar = (e) => {
     e.preventDefault();
-    setShowCalendar((state) => !state);
-    setAddClassOnClickDate((state) => !state);
+    setShowCalendar((showCalendar) => !showCalendar);
+    setAddClassOnClickDate((addClassOnClickDate) => !addClassOnClickDate);
     //Up or down arrows in button
     if (chevronSecond === faChevronDown) {
       setChevronSecond(faChevronUp);
@@ -142,12 +142,10 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
             })
           );
         })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
+        .catch((error) => console.error("Error writing document: ", error));
     }
     //EditMode - edit button
-    else if (editMode !== false) {
+    else if (editMode) {
       setEditMode(false);
       //Firebase - edit
       db.collection("transaction")
@@ -199,7 +197,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
 
   //Exit buttons
   const handleExitTransaction = () => {
-    if (editMode !== false) {
+    if (editMode) {
       setEditMode(false);
     } else {
       setNewTransactionMode(false);
@@ -259,7 +257,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
               <button className={`${nameOfClassOnClickCategory} btn btn-category btn-category-list`} onClick={handleShowCategoryList}>
                 <FontAwesomeIcon icon={getIcon(category)} /> {categoryTitle} <FontAwesomeIcon icon={chevronFirst} className="newTransaction__icon__btn" />
               </button>
-              {showCategoryList === true && (
+              {showCategoryList && (
                 <ul className="newTransaction__categoryList">
                   {categories.map((cat) => {
                     return (
@@ -291,7 +289,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
               <button onClick={handleShowCalendar} className={`${nameOfClassOnClickDate} btn btn-category`}>
                 {date.toLocaleDateString()} <FontAwesomeIcon icon={chevronSecond} className="newTransaction__icon__btn" />
               </button>
-              {showCalendar === true && (
+              {showCalendar && (
                 <div className="calendar">
                   <Calendar value={date} onClickDay={(date) => handleChooseDate(date)} minDate={new Date(2011, 0, 1)} maxDate={new Date(2030, 11, 31)} />
                 </div>
@@ -313,7 +311,7 @@ export const TransactionForm = ({ setDatabase, setNewTransactionMode, editMode, 
           <button disabled={disabledAddTransaction} onClick={handleAddTransaction} className={`${nameOfClassAddTransaction} btn`}>
             {addOrEditButton}
           </button>
-          {editMode !== false && (
+          {editMode && (
             <button className="btn btn-delete" onClick={handleDeleteTransaction}>
               Usuń
             </button>

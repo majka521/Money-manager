@@ -13,12 +13,14 @@ export const SingleStatistic = ({
   currentlyDateStart,
   currentlyDateEnd,
 }) => {
-  //Sum of currently transactions group
-  let sum = 0;
   //Exit button
   const handleExitTransaction = () => {
     setStatisticMode(false);
   };
+
+  //Sum of currently transactions group
+  let sum = singleStatistic.reduce((sum, el) => sum + parseFloat(el.cost), 0);
+
   return (
     <section className="newTransaction section container singleStatistic">
       <div className="section__header">
@@ -38,7 +40,6 @@ export const SingleStatistic = ({
 
       <ul>
         {singleStatistic.map((el) => {
-          sum += parseFloat(el.cost);
           return (
             <SingleTransaction
               key={el.id}

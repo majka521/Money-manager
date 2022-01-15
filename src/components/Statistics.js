@@ -4,42 +4,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getIcon } from "./data/categories";
 
 export const Statistics = ({ database, statisticMode, setStatisticMode, setSingleStatistic, currentlyDateStart, currentlyDateEnd }) => {
-  //New array with unique categories (one each, no repetitions)
-  const uniqueDatabase = {};
-  database.forEach(({ category, cost, categoryTitle }) => {
+  //Unique categories (one each, no repetitions)
+  const uniqueDatabase = database.reduce((prevObj, currObj) => {
+    const { category, cost, categoryTitle } = currObj;
     // If we already have this category - add the sum
-    if (category in uniqueDatabase) {
-      uniqueDatabase[category].sum += parseFloat(cost);
-      uniqueDatabase[category].quantity++;
-      // If we don't have this category - make an object
+    if (category in prevObj) {
+      prevObj[category].sum += parseFloat(cost);
+      prevObj[category].quantity = prevObj[category].quantity + 1;
+      return prevObj;
+      // If we don't have this category - make new object
     } else {
-      uniqueDatabase[category] = {
-        categoryTitle,
-        category,
-        sum: parseFloat(cost),
-        quantity: 1,
+      return {
+        ...prevObj,
+        [category]: {
+          categoryTitle,
+          category,
+          sum: parseFloat(cost),
+          quantity: 1,
+        },
       };
     }
-  });
-  const uniqueDatabaseArray = Object.values(uniqueDatabase);
+  }, {});
 
   //Sort by Sum
-  const sortBySum = (a, b) => {
-    return b.sum - a.sum;
-  };
-  uniqueDatabaseArray.sort(sortBySum);
+  const sortBySum = (a, b) => b.sum - a.sum;
+  const uniqueDatabaseArray = Object.values(uniqueDatabase).sort(sortBySum);
 
   //Prepare arrays for chart and total sum of expenses
-  let totalSum = 0;
-  let allSum = [];
-  let allCategoriesTitle = [];
-  let allColors = [];
-  uniqueDatabaseArray.map((el) => {
-    allSum.push(parseFloat(el.sum).toFixed(2));
-    allCategoriesTitle.push(el.categoryTitle);
-    allColors.push(getColor(el.category));
-    return (totalSum += +el.sum);
-  });
+  const statisticsData = uniqueDatabaseArray.reduce(
+    (accObj, currObj) => ({
+      allSum: accObj.allSum.concat(parseFloat(currObj.sum).toFixed(2)),
+      allCategoriesTitle: accObj.allCategoriesTitle.concat(currObj.categoryTitle),
+      allColors: accObj.allColors.concat(getColor(currObj.category)),
+      totalSum: accObj.totalSum + currObj.sum,
+    }),
+    { allSum: [], allCategoriesTitle: [], allColors: [], totalSum: 0 }
+  );
+
+  const { allSum, allCategoriesTitle, allColors, totalSum } = statisticsData;
 
   //Buttons - choose category for statistics
   const [dataCat, seDataCat] = useState("");
@@ -60,7 +62,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
     <section className="statistics section">
       <div className="section__header">
         <h2 className="section__title">Statystyki</h2>
-        {database.length === 0 ? (
+        {!database.length ? (
           <h1>Ładuję dane...</h1>
         ) : (
           <p className="section__timePeriod">
@@ -68,7 +70,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
           </p>
         )}
       </div>
-      {database.length === 0 ? (
+      {!database.length ? (
         <h1>Ładuję dane...</h1>
       ) : (
         <h2>
@@ -96,7 +98,7 @@ export const Statistics = ({ database, statisticMode, setStatisticMode, setSingl
                 callbacks: {
                   label: (data) => {
                     let percent = (data.parsed * 100) / totalSum;
-                    return data.label + `: ` + data.parsed + "zł - " + (Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)) + "%";
+                    return `${data.label}:  ${data.parsed} zł - ${Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(2)}%`;
                   },
                 },
               },
